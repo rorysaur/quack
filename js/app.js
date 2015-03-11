@@ -17,7 +17,6 @@ var data = {
     }
   ]
 };
-console.log(data);
 
 // bootstrap entire application and render into DOM
 React.render(

@@ -14,7 +14,7 @@ Will be explained in detail.
 
 ## Dev workflow
 
-In one terminal pane, navigate to the project root and run `npm start`. This runs the `start` script specified in the `package.json`, which calls `watchify` to watch for any changes in the `js/` directory, and re-run `browserify` which transpiles JSX to JavaScript and concatenates everything into `js/bundle.js`.
+In one terminal pane, navigate to the project root and run `npm start`. This runs the `start` script specified in the `package.json`, which watches for any changes in the `js/` directory, transpiles JSX to JavaScript, and concatenates everything into `js/bundle.js`.
 
 In another terminal pane, navigate to the project root and boot up a server for `index.html`. I use `python -m SimpleHTTPServer`, then visit `localhost:8000` in my browser.
 
