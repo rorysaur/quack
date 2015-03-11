@@ -1,0 +1,27 @@
+{
+  "name": "quack",
+  "version": "0.0.1",
+  "description": "ambitious lil bro of Slack",
+  "main": "app.js",
+  "scripts": {
+    "start": "watchify js/app.js -o js/bundle.js -v -d",
+    "test": "test"
+  },
+  "author": "Rory Ou <ou.rory@gmail.com> (http://github.com/rorysaur)",
+  "license": "MIT",
+  "dependencies": {
+    "flux": "^2.0.1",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "reactify": "^1.0.0",
+    "watchify": "^2.4.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
