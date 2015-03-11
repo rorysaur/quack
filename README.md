@@ -19,3 +19,9 @@ In one terminal pane, navigate to the project root and run `npm start`. This run
 In another terminal pane, navigate to the project root and boot up a server for `index.html`. I use `python -m SimpleHTTPServer`, then visit `localhost:8000` in my browser.
 
 You should be able to save changes to the `js/` directory, then refresh in the browser to see the changes.
+
+## Contributing
+
+If you are a collaborator, branch from `master` and create a pull request for each feature. Merge `master` when necessary. We'll use the Issues section for task tracking.
+
+If you are not a collaborator, fork this repo, create a feature branch, and submit a pull request from your fork.
