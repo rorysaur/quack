@@ -22,6 +22,8 @@ You should be able to save changes to the `js/` directory, then refresh in the b
 
 ## Contributing
 
-If you are a collaborator, branch from `master` and create a pull request for each feature. Merge `master` when necessary. We'll use the Issues section for task tracking.
+If you are a collaborator, branch from `master` and create a pull request for each feature. Merge `master` when necessary.
+
+We'll use the Issues section for task tracking. Assign an issue to yourself as soon as you start working on it, so that others know to not work on the same feature.
 
 If you are not a collaborator, fork this repo, create a feature branch, and submit a pull request from your fork.
