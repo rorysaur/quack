@@ -1,7 +1,5 @@
 # Quack
 
----
-
 A humble but ambitious clone of Slack, the chat app, using React, Flux, and eventually Firebase.
 
 ## Installation
