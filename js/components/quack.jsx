@@ -6,7 +6,7 @@ var Quack = React.createClass({
   render: function() {
     return (
       <div className="quack">
-        <ChannelMessages messages={this.props.data.messages}>
+        <ChannelMessages>
         </ChannelMessages>
         <Input>
         </Input>

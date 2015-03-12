@@ -19,7 +19,6 @@ var ChannelMessages = React.createClass({
   },
 
   getInitialState: function() {
-    MessageStore.setInitialMessages(this.props.messages)
     return {messages: MessageStore.all()}
   },
 
