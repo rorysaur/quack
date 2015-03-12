@@ -1,9 +1,10 @@
 var React = require('react');
 var Message = require('./message.jsx');
+var MessageStore = require('../stores/message_store')
 
 var ChannelMessages = React.createClass({
   render: function() {
-    var messageNodes = this.props.messages.map(function(message) {
+    var messageNodes = this.state.messages.map(function(message) {
       return (
         <Message message={message}>
         </Message>
@@ -15,7 +16,21 @@ var ChannelMessages = React.createClass({
         {messageNodes}
       </div>
     );
+  },
+
+  getInitialState: function() {
+    MessageStore.setInitialMessages(this.props.messages)
+    return {messages: MessageStore.all()}
+  },
+
+  componentDidMount: function() {
+    MessageStore.on('change', this.messageStoreChange);
+  },
+
+  messageStoreChange: function() {
+    this.setState({messages: MessageStore.all()})
   }
+
 });
 
 module.exports = ChannelMessages;
