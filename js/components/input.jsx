@@ -1,5 +1,5 @@
 var React = require('react');
-var AppDispatcher = require('../dispatcher/app_dispatcher')
+var AppDispatcher = require('../dispatcher/app_dispatcher');
 
 var Input = React.createClass({
   render: function() {
@@ -23,7 +23,7 @@ var Input = React.createClass({
   },
 
   _onChange: function(event) {
-    this.setState({message: event.target.value})
+    this.setState({message: event.target.value});
   },
 
   _onKeyDown: function(event) {
@@ -33,7 +33,7 @@ var Input = React.createClass({
         type: "NewMessage",
         text: this.state.message
       })
-      this.setState({message: ''})
+      this.setState({message: ''});
     }
   }
 });

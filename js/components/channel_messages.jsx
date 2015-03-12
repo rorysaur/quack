@@ -1,6 +1,6 @@
 var React = require('react');
 var Message = require('./message.jsx');
-var MessageStore = require('../stores/message_store')
+var MessageStore = require('../stores/message_store');
 
 var ChannelMessages = React.createClass({
   render: function() {
@@ -19,7 +19,7 @@ var ChannelMessages = React.createClass({
   },
 
   getInitialState: function() {
-    return {messages: MessageStore.all()}
+    return {messages: MessageStore.all()};
   },
 
   componentDidMount: function() {
@@ -27,7 +27,7 @@ var ChannelMessages = React.createClass({
   },
 
   messageStoreChange: function() {
-    this.setState({messages: MessageStore.all()})
+    this.setState({messages: MessageStore.all()});
   }
 
 });

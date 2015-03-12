@@ -1,6 +1,6 @@
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
-var AppDispatcher = require('../dispatcher/app_dispatcher')
+var AppDispatcher = require('../dispatcher/app_dispatcher');
 var _messages = [
   {
     id: 1,
@@ -18,7 +18,7 @@ var _messages = [
 var MessageStore = assign({}, EventEmitter.prototype, {
 
   all: function() {
-    return _messages
+    return _messages;
   },
 });
 
@@ -30,8 +30,8 @@ MessageStore.dispatchToken = AppDispatcher.register(function(action) {
       user: 'jack',
       text: action.text
     }
-    _messages.push(message)
-    MessageStore.emit("change")
+    _messages.push(message);
+    MessageStore.emit("change");
   }
 })
 module.exports = MessageStore;
