@@ -1,10 +1,10 @@
-var QuackDispatcher = require('../dispatcher/app_dispatcher');
+var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 var UserStore = require('../stores/user_store')
 
 module.exports = {
   createMessage: function(text) {
-    QuackDispatcher.dispatch({
+    AppDispatcher.dispatch({
       type: ActionTypes.NEW_MESSAGE,
       text: text,
       user: UserStore.localUser().name,
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   renameLocalUser: function(newName) {
-    QuackDispatcher.dispatch({
+    AppDispatcher.dispatch({
       type: ActionTypes.RENAME_LOCAL_USER,
       newName: newName
     })
