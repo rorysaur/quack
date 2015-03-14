@@ -31,5 +31,4 @@ var ChannelMessages = React.createClass({
   }
 
 });
-
 module.exports = ChannelMessages;

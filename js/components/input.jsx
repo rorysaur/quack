@@ -1,5 +1,9 @@
 var React = require('react');
-var AppDispatcher = require('../dispatcher/app_dispatcher');
+var Actions = require('../actions/actions');
+var KeyCodes = {
+  enter: 13
+};
+var CommandCharacter = ":";
 
 var Input = React.createClass({
   render: function() {
@@ -27,12 +31,13 @@ var Input = React.createClass({
   },
 
   _onKeyDown: function(event) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === KeyCodes.enter) {
       event.preventDefault();
-      AppDispatcher.dispatch({
-        type: "NewMessage",
-        text: this.state.message
-      })
+      if (this.state.message[0] == CommandCharacter) {
+        Actions.userCommand(this.state.message);
+      } else {
+        Actions.createMessage(this.state.message);
+      }
       this.setState({message: ''});
     }
   }
