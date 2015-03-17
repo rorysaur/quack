@@ -4,12 +4,12 @@ var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
 var _settings = {
-  command: ":"
+  cmd: ":"
 };
 
 var SettingsStore = assign({}, EventEmitter.prototype, {
   commandCharacter: function() {
-    return _settings.command;
+    return _settings.cmd;
   }
 });
 
