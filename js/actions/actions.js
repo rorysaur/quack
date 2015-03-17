@@ -23,6 +23,9 @@ module.exports = {
       case 'nick':
         this.renameLocalUser(args[1]);
         break;
+      case "config":
+        this.changeSetting({variable: args[1], value: args[2]});
+        break;
     }
   },
 
@@ -32,6 +35,22 @@ module.exports = {
       data: {
         newName: newName
       }
+    });
+  },
+
+  changeSetting: function(change) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CHANGE_SETTING,
+      data: {
+        variable: change.variable,
+        value: change.value
+      }
+    });
+  },
+
+  clearFlash: function() {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CLEAR_FLASH
     });
   }
 };

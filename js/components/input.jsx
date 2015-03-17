@@ -1,9 +1,9 @@
 var React = require('react');
 var Actions = require('../actions/actions');
+var SettingsStore = require('../stores/settings_store');
 var KeyCodes = {
   enter: 13
 };
-var CommandCharacter = ':';
 
 var Input = React.createClass({
   render: function() {
@@ -23,23 +23,34 @@ var Input = React.createClass({
   },
 
   getInitialState: function() {
-    return {message: ''};
+    return {
+      message: '',
+      commandCharacter: SettingsStore.commandCharacter()
+    };
+  },
+
+  componentDidMount: function() {
+    SettingsStore.on('change', this.settingsStoreChange);
   },
 
   _onChange: function(event) {
-    this.setState({message: event.target.value});
+    this.setState({message: event.target.value, commandCharacter: this.state.commandCharacter});
   },
 
   _onKeyDown: function(event) {
     if (event.keyCode === KeyCodes.enter) {
       event.preventDefault();
-      if (this.state.message[0] === CommandCharacter) {
+      if (this.state.message[0] === this.state.commandCharacter) {
         Actions.userCommand(this.state.message);
       } else {
         Actions.createMessage(this.state.message);
       }
       this.setState({message: ''});
     }
+  },
+
+  settingsStoreChange: function() {
+    this.setState({message: this.state.message, commandCharacter: SettingsStore.commandCharacter()});
   }
 });
 
