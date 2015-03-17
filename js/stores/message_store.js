@@ -27,7 +27,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.NEW_MESSAGE) {
     var message = {
-      id:  MessageStore.all.length,
+      id:  MessageStore.all().length,
       timestamp: action.data.timestamp,
       user: action.data.user,
       text: action.data.text
