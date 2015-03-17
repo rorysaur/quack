@@ -16,7 +16,7 @@ var _messages = [
     user: 'iz',
     text: 'omg hi'
   }
-]
+];
 var MessageStore = assign({}, EventEmitter.prototype, {
 
   all: function() {
@@ -31,9 +31,9 @@ MessageStore.dispatchToken = AppDispatcher.register(function(action) {
       timestamp: action.timestamp,
       user: action.user,
       text: action.text
-    }
+    };
     _messages.push(message);
     MessageStore.emit("change");
   }
-})
+});
 module.exports = MessageStore;

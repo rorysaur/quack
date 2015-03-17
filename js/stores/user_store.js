@@ -33,7 +33,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
   },
 
   find: function(id) {
-    for (i in _users) {
+    for (var i in _users) {
       if (_users[i].id === id) {
         return _users[i];
       }
@@ -46,8 +46,8 @@ var UserStore = assign({}, EventEmitter.prototype, {
       id: oldUser.id,
       name: newName
     };
-    this.find(oldUser.id).name = newName
-    this.emit("change")
+    this.find(oldUser.id).name = newName;
+    this.emit("change");
   }
 });
 
@@ -55,6 +55,6 @@ UserStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.RENAME_LOCAL_USER) {
     UserStore.renameLocalUser(action.newName);
   }
-})
+});
 
 module.exports = UserStore;

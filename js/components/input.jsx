@@ -33,7 +33,7 @@ var Input = React.createClass({
   _onKeyDown: function(event) {
     if (event.keyCode === KeyCodes.enter) {
       event.preventDefault();
-      if (this.state.message[0] == CommandCharacter) {
+      if (this.state.message[0] === CommandCharacter) {
         Actions.userCommand(this.state.message);
       } else {
         Actions.createMessage(this.state.message);

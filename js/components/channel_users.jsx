@@ -7,7 +7,7 @@ var ChannelUsers = React.createClass({
       return(
         <li>{user.name}</li>
       );
-    })
+    });
     return(
       <ul>
         {names}
