@@ -46,5 +46,11 @@ module.exports = {
         value: change.value
       }
     });
+  },
+
+  clearFlash: function() {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CLEAR_FLASH
+    });
   }
 };
