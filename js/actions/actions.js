@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
-var UserStore = require('../stores/user_store')
+var UserStore = require('../stores/user_store');
 
 module.exports = {
   createMessage: function(text) {
@@ -9,13 +9,14 @@ module.exports = {
       text: text,
       user: UserStore.localUser().name,
       timestamp: new Date().getTime()
-    })
+    });
   },
 
   userCommand: function(text) {
     //Determine the action based on the user command. Eventually this shouldn't be an action
     //and the logic should go somewhere else
-    switch(text.split(" ")[0].slice(1)) {
+    var command = text.split(" ")[0].slice(1);
+    switch(command) {
       case "nick":
         this.renameLocalUser(text.split(" ")[1]);
         break;
@@ -26,6 +27,6 @@ module.exports = {
     AppDispatcher.dispatch({
       type: ActionTypes.RENAME_LOCAL_USER,
       newName: newName
-    })
+    });
   }
-}
+};
