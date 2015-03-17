@@ -17,10 +17,11 @@ module.exports = {
   userCommand: function(text) {
     //Determine the action based on the user command. Eventually this shouldn't be an action
     //and the logic should go somewhere else
-    var command = text.split(" ")[0].slice(1);
+    var args = text.split(" ");
+    var command = args[0].slice(1);
     switch(command) {
       case "nick":
-        this.renameLocalUser(text.split(" ")[1]);
+        this.renameLocalUser(args[1]);
         break;
     }
   },
