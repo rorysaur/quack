@@ -3,17 +3,17 @@ var Actions = require('../actions/actions');
 var KeyCodes = {
   enter: 13
 };
-var CommandCharacter = ":";
+var CommandCharacter = ':';
 
 var Input = React.createClass({
   render: function() {
     var style = {
-      width: "1000px"
+      width: '1000px'
     };
 
     return (
       <input
-        type="text"
+        type='text'
         style={style}
         value={this.state.message}
         onChange={this._onChange}

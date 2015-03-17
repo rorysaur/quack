@@ -11,7 +11,7 @@ var ChannelMessages = React.createClass({
       );
     });
     return (
-      <div className="channel-messages">
+      <div className='channel-messages'>
         <h1>You are in a Quack channel.</h1>
         {messageNodes}
       </div>

@@ -33,7 +33,7 @@ MessageStore.dispatchToken = AppDispatcher.register(function(action) {
       text: action.data.text
     };
     _messages.push(message);
-    MessageStore.emit("change");
+    MessageStore.emit('change');
   }
 });
 module.exports = MessageStore;

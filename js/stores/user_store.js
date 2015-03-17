@@ -47,7 +47,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
       name: newName
     };
     this.find(oldUser.id).name = newName;
-    this.emit("change");
+    this.emit('change');
   }
 });
 
