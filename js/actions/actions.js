@@ -17,10 +17,14 @@ module.exports = {
   userCommand: function(text) {
     //Determine the action based on the user command. Eventually this shouldn't be an action
     //and the logic should go somewhere else
-    var command = text.split(" ")[0].slice(1);
+    var args = text.split(" ");
+    var command = args[0].slice(1);
     switch(command) {
       case "nick":
-        this.renameLocalUser(text.split(" ")[1]);
+        this.renameLocalUser(args[1]);
+        break;
+      case "config":
+        this.changeSetting({variable: args[1], value: args[2]});
         break;
     }
   },
@@ -30,6 +34,16 @@ module.exports = {
       type: ActionTypes.RENAME_LOCAL_USER,
       data: {
         newName: newName
+      }
+    });
+  },
+
+  changeSetting: function(change) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.CHANGE_SETTING,
+      data: {
+        variable: change.variable,
+        value: change.value
       }
     });
   }
