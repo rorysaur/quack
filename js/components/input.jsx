@@ -50,7 +50,7 @@ var Input = React.createClass({
   },
 
   settingsStoreChange: function() {
-    this.setState({commandCharacter: SettingsStore.commandCharacter()});
+    this.setState({message: this.state.message, commandCharacter: SettingsStore.commandCharacter()});
   }
 });
 
