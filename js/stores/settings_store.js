@@ -17,6 +17,7 @@ SettingsStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.CHANGE_SETTING) {
     if (_settings.hasOwnProperty(action.data.variable)) {
       _settings[action.data.variable] = action.data.value;
+      SettingsStore.emit("change");
     }
   }
 });
