@@ -53,7 +53,7 @@ var UserStore = assign({}, EventEmitter.prototype, {
 
 UserStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.RENAME_LOCAL_USER) {
-    UserStore.renameLocalUser(action.newName);
+    UserStore.renameLocalUser(action.data.newName);
   }
 });
 

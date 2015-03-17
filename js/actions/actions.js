@@ -6,10 +6,12 @@ module.exports = {
   createMessage: function(text) {
     AppDispatcher.dispatch({
       type: ActionTypes.NEW_MESSAGE,
-      text: text,
-      user: UserStore.localUser().name,
-      timestamp: new Date().getTime()
-    });
+      data: {
+        text: text,
+        user: UserStore.localUser().name,
+        timestamp: new Date().getTime()
+      }
+   });
   },
 
   userCommand: function(text) {
@@ -26,7 +28,9 @@ module.exports = {
   renameLocalUser: function(newName) {
     AppDispatcher.dispatch({
       type: ActionTypes.RENAME_LOCAL_USER,
-      newName: newName
+      data: {
+        newName: newName
+      }
     });
   }
 };

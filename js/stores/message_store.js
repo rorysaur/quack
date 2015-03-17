@@ -27,10 +27,10 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.NEW_MESSAGE) {
     message = {
-      id:  action.message_id,
-      timestamp: action.timestamp,
-      user: action.user,
-      text: action.text
+      id:  action.data.message_id,
+      timestamp: action.data.timestamp,
+      user: action.data.user,
+      text: action.data.text
     };
     _messages.push(message);
     MessageStore.emit("change");
