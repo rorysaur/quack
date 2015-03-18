@@ -25,7 +25,7 @@ var Input = React.createClass({
   getInitialState: function() {
     return {
       message: '',
-      commandCharacter: SettingsStore.commandCharacter()
+      commandCharacter: SettingsStore.get("cmd")
     };
   },
 
@@ -55,7 +55,7 @@ var Input = React.createClass({
   settingsStoreChange: function() {
     this.setState({
       message: this.state.message,
-      commandCharacter: SettingsStore.commandCharacter()
+      commandCharacter: SettingsStore.get("cmd")
     });
   }
 });

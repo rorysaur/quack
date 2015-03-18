@@ -8,8 +8,12 @@ var _settings = {
 };
 
 var SettingsStore = assign({}, EventEmitter.prototype, {
-  commandCharacter: function() {
-    return _settings.cmd;
+  get: function(key) {
+    if (_settings.hasOwnProperty(key)) {
+      return _settings[key];
+    } else {
+      throw new Error(key + " is not a key in the settings store!");
+    }
   }
 });
 

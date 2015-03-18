@@ -17,7 +17,7 @@ FlashStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.type) {
     case ActionTypes.CHANGE_SETTING:
       AppDispatcher.waitFor([SettingsStore.dispatchToken]);
-      _message = "Command character is now '" + SettingsStore.commandCharacter() + "'";
+      _message = action.data.variable + " is now '" + SettingsStore.get(action.data.variable) + "'";
       FlashStore.emit('change');
       break;
     case ActionTypes.CLEAR_FLASH:
