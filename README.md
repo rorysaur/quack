@@ -20,6 +20,11 @@ In another terminal pane, navigate to the project root and boot up a server for 
 
 You should be able to save changes to the `js/` directory, then refresh in the browser to see the changes.
 
+### Testing
+Run tests with `npm test`.
+Tests go in a __tests__ directory in the folder of the module being tested and are suffixed with _test.
+See [here](http://facebook.github.io/react/blog/2014/09/24/testing-flux-applications.html) for a good explanation of testing Flux with Jest.
+
 ## Contributing
 
 If you are a collaborator, branch from `master` and create a pull request for each feature. Merge `master` when necessary.
