@@ -5,6 +5,7 @@ module.exports = {
     NEW_MESSAGE: null,
     RENAME_LOCAL_USER: null,
     CHANGE_SETTING: null,
-    CLEAR_FLASH: null
+    CLEAR_FLASH: null,
+    EDIT_LAST_MESSAGE: null
   })
 };
