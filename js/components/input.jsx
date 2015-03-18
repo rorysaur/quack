@@ -34,7 +34,10 @@ var Input = React.createClass({
   },
 
   _onChange: function(event) {
-    this.setState({message: event.target.value, commandCharacter: this.state.commandCharacter});
+    this.setState({
+      message: event.target.value,
+      commandCharacter: this.state.commandCharacter
+    });
   },
 
   _onKeyDown: function(event) {
@@ -50,7 +53,10 @@ var Input = React.createClass({
   },
 
   settingsStoreChange: function() {
-    this.setState({message: this.state.message, commandCharacter: SettingsStore.commandCharacter()});
+    this.setState({
+      message: this.state.message,
+      commandCharacter: SettingsStore.commandCharacter()
+    });
   }
 });
 
