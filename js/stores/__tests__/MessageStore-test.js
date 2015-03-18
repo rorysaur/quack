@@ -9,6 +9,7 @@ describe('MessageStore', function() {
   var callback;
   
   var ActionTypes = require('../../constants/constants').ActionTypes;
+
   var actionCreateMessage = {
     type: ActionTypes.NEW_MESSAGE,
     data: {
@@ -33,7 +34,4 @@ describe('MessageStore', function() {
     expect(lastMessage.text).toBe(actionCreateMessage.data.text);
   });
 
-
 });
-
-
