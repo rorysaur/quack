@@ -26,9 +26,10 @@ describe('MessageStore', function() {
   });
 
   it('creates a new message', function() {
+    var oldMessageLength = MessageStore.all().length;
     callback(actionCreateMessage);
     var messages = MessageStore.all();
-    expect(messages.length).toBe(3);
+    expect(messages.length - oldMessageLength).toBe(1);
     var lastMessage = messages[messages.length - 1];
     expect(lastMessage.user).toBe(actionCreateMessage.data.user);
     expect(lastMessage.text).toBe(actionCreateMessage.data.text);
