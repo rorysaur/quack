@@ -13,9 +13,18 @@ describe('MessageStore', function() {
   var actionCreateMessage = {
     type: ActionTypes.NEW_MESSAGE,
     data: {
-      user: "Bob",
-      text: "Hello, everyone I'm new.",
-      timestamp: new Date().getTime()
+      user: 'Bob',
+      text: "Hello, everyone I'm nw.",
+      timestamp: new Date().getTime(),
+      local: true
+    }
+  };
+
+  var actionEditLastMessage = {
+    type: ActionTypes.EDIT_LAST_MESSAGE,
+    data: {
+      find: 'nw',
+      replaceWith: 'new'
     }
   };
 
@@ -35,4 +44,20 @@ describe('MessageStore', function() {
     expect(lastMessage.text).toBe(actionCreateMessage.data.text);
   });
 
+  it('edits the previous message', function() {
+    callback(actionCreateMessage);
+    var messages = MessageStore.all();
+    var oldSpelling = messages[messages.length - 1].text;
+    expect(oldSpelling).toBe("Hello, everyone I'm nw.");
+    callback(actionEditLastMessage);
+    var newMessages = MessageStore.all();
+    var newSpelling = newMessages[newMessages.length - 1].text;
+    expect(newSpelling).toBe("Hello, everyone I'm new.");
+  });
+
+  it('does not do anything if there is no message to edit', function() {
+    var messages = MessageStore.all();
+    var oldSpelling = messages[messages.length - 1].text;
+    expect(function() { callback(actionEditLastMessage); }).not.toThrow();
+  });
 });

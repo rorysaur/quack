@@ -53,6 +53,9 @@ MessageStore.dispatchToken = AppDispatcher.register(function(action) {
 
     case ActionTypes.EDIT_LAST_MESSAGE:
       var localMessages = MessageStore.local();
+      if (localMessages.length === 0) {
+        break;
+      }
       var lastMessage = localMessages[localMessages.length - 1];
       lastMessage.text = lastMessage.text.replace(action.data.find, action.data.replaceWith);
       MessageStore.emit('change');
