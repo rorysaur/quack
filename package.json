@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "watchify js/app.js -o js/bundle.js -v -d",
-    "test": "test"
+    "test": "jest"
   },
   "author": "Rory Ou <ou.rory@gmail.com> (http://github.com/rorysaur)",
   "license": "MIT",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "jest-cli": "^0.4.0",
     "reactify": "^1.0.0",
     "watchify": "^2.4.0"
   },
