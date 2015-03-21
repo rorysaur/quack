@@ -14,7 +14,7 @@ var Parser = {
   },
 
   //Find which of the possible delimeters is used
-  getDelimeter: function(text) {
+  getDelimiter: function(text) {
     for (var i in text) {
       if (this.delimiters.indexOf(text[i]) > -1) {
         return text[i];
