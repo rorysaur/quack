@@ -8,8 +8,8 @@ var Parser = {
     var delimiter = this.getDelimeter(text);
     var args = text.split(delimiter);
     return {
-      command: args.shift(),
-      args: args
+      command: args[0],
+      args: args.slice(1)
     };
   },
 
