@@ -1,11 +1,9 @@
-var SettingsStore = require('../stores/settings_store');
-
 var Parser = {
   delimiters: [" ", "/"],
 
   parse: function(text) {
     text = text.slice(1); // remove command character
-    var delimiter = this.getDelimeter(text);
+    var delimiter = this.getDelimiter(text);
     var args = text.split(delimiter);
     return {
       command: args[0],
@@ -29,25 +27,26 @@ module.exports = {
     var command = parsed.command;
     var args = parsed.args;
 
-    switch(command) {
-
-      case 'nick':
+    var userCommandRouter = {
+      nick: function() {
         actions.renameLocalUser(args[0]);
-      break;
+      },
 
-      case 'config':
+      config: function() {
         actions.changeSetting({
-        variable: args[0],
-        value: args[1]
-      });
-      break;
+          variable: args[0],
+          value: args[1]
+        });
+      },
 
-      case 's':
+      s: function() {
         actions.editLastMessage({
-        find: args[0],
-        replaceWith: args[1]
-      });
-      break;
-    }
+          find: args[0],
+          replaceWith: args[1]
+        });
+      }
+    };
+
+    userCommandRouter[command]();
   }
 };
