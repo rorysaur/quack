@@ -9,12 +9,20 @@ var Quack = React.createClass({
       <div className="quack">
         <Flash>
         </Flash>
-        <ChannelMessages>
-        </ChannelMessages>
-        <ChannelUsers>
-        </ChannelUsers>
-        <Input>
-        </Input>
+        <div className="channel-list">
+          <h4>Channels</h4>
+          <ul>
+            <li>#fakechannel</li>
+          </ul>
+        </div>
+        <div className="channel-box">
+          <ChannelMessages>
+          </ChannelMessages>
+          <ChannelUsers>
+          </ChannelUsers>
+          <Input>
+          </Input>
+        </div>
       </div>
     );
   }
