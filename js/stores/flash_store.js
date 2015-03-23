@@ -13,18 +13,20 @@ var FlashStore = assign({}, EventEmitter.prototype, {
 
 });
 
+var DispatchHandler = {}
+
+DispatchHandler[ActionTypes.CHANGE_SETTING] = function(data) {
+  AppDispatcher.waitFor([SettingsStore.dispatchToken]);
+  _message = data.variable + " is now '" + SettingsStore.get(data.variable) + "'";
+};
+
+DispatchHandler[ActionTypes.CLEAR_FLASH] = function() {
+  _message = '';
+};
+
 FlashStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch(action.type) {
-    case ActionTypes.CHANGE_SETTING:
-      AppDispatcher.waitFor([SettingsStore.dispatchToken]);
-      _message = action.data.variable + " is now '" + SettingsStore.get(action.data.variable) + "'";
-      FlashStore.emit('change');
-      break;
-    case ActionTypes.CLEAR_FLASH:
-      _message = '';
-      FlashStore.emit('change');
-      break;
-  }
+  DispatchHandler[action.type](action.data);
+  FlashStore.emit('change');
 });
 
 module.exports = FlashStore;
