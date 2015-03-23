@@ -47,6 +47,10 @@ module.exports = {
       }
     };
 
-    userCommandRouter[command]();
+    if (userCommandRouter.hasOwnProperty(command)) {
+      userCommandRouter[command]();
+    } else {
+      actions.flashNotify('Unknown command: ' + command);
+    }
   }
 };
