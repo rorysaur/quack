@@ -53,5 +53,14 @@ module.exports = {
         replaceWith: edits.replaceWith
       }
     });
+  },
+
+  flashNotify: function(message) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.NOTIFY,
+      data: {
+        message: message
+      }
+    });
   }
 };
