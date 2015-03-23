@@ -17,6 +17,7 @@
   }
   .channel-box {
     @include span-columns(10);
+    @include omega;
     border-style: solid;
     border-color: grey;
 
@@ -33,7 +34,6 @@
       }
       border-style: solid;
       border-color: grey;
-
     }
 
     .chat-input {

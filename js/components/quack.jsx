@@ -7,8 +7,6 @@ var Quack = React.createClass({
   render: function() {
     return (
       <div className="quack">
-        <Flash>
-        </Flash>
         <div className="channel-list">
           <h4>Channels</h4>
           <ul>
@@ -23,6 +21,7 @@ var Quack = React.createClass({
           <Input>
           </Input>
         </div>
+        <Flash></Flash>
       </div>
     );
   }
