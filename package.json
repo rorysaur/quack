@@ -11,18 +11,19 @@
   "license": "MIT",
   "dependencies": {
     "flux": "^2.0.1",
-    "object-assign": "^2.0.0",
     "react": "^0.12.2"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
     "jest-cli": "^0.4.0",
     "reactify": "^1.0.0",
-    "watchify": "^2.4.0"
+    "watchify": "^2.4.0",
+    "sassify": "^0.7.0"
   },
   "browserify": {
     "transform": [
-      "reactify"
+      ["reactify"],
+      ["sassify", { "auto-inject": true } ]
     ]
   }
 }
