@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 var UserStore = require('../stores/user_store');
+var UserCommandHandler = require('../utils/user_command_handler');
 
 module.exports = {
   createMessage: function(text) {
@@ -9,24 +10,14 @@ module.exports = {
       data: {
         text: text,
         user: UserStore.localUser().name,
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
+        local: true
       }
    });
   },
 
   userCommand: function(text) {
-    //Determine the action based on the user command. Eventually this shouldn't be an action
-    //and the logic should go somewhere else
-    var args = text.split(' ');
-    var command = args[0].slice(1);
-    switch(command) {
-      case 'nick':
-        this.renameLocalUser(args[1]);
-        break;
-      case "config":
-        this.changeSetting({variable: args[1], value: args[2]});
-        break;
-    }
+    UserCommandHandler.handle(text, this);
   },
 
   renameLocalUser: function(newName) {
@@ -51,6 +42,16 @@ module.exports = {
   clearFlash: function() {
     AppDispatcher.dispatch({
       type: ActionTypes.CLEAR_FLASH
+    });
+  },
+
+  editLastMessage: function(edits) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.EDIT_LAST_MESSAGE,
+      data: {
+        find: edits.find,
+        replaceWith: edits.replaceWith
+      }
     });
   }
 };
