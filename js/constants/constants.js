@@ -6,6 +6,7 @@ module.exports = {
     RENAME_LOCAL_USER: null,
     CHANGE_SETTING: null,
     CLEAR_FLASH: null,
-    EDIT_LAST_MESSAGE: null
+    EDIT_LAST_MESSAGE: null,
+    NOTIFY: null
   })
 };

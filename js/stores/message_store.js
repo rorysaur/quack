@@ -61,7 +61,9 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
 };
 
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
-   DispatchHandler[action.type](action.data);
-   MessageStore.emit('change');
+  if (DispatchHandler.hasOwnProperty(action.type)) {
+    DispatchHandler[action.type](action.data);
+    MessageStore.emit('change');
+  }
 });
 module.exports = MessageStore;

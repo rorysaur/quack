@@ -13,7 +13,7 @@ var FlashStore = assign({}, EventEmitter.prototype, {
 
 });
 
-var DispatchHandler = {}
+var DispatchHandler = {};
 
 DispatchHandler[ActionTypes.CHANGE_SETTING] = function(data) {
   AppDispatcher.waitFor([SettingsStore.dispatchToken]);
@@ -24,9 +24,15 @@ DispatchHandler[ActionTypes.CLEAR_FLASH] = function() {
   _message = '';
 };
 
+DispatchHandler[ActionTypes.NOTIFY] = function(data) {
+  _message = data.message;
+};
+
 FlashStore.dispatchToken = AppDispatcher.register(function(action) {
-  DispatchHandler[action.type](action.data);
-  FlashStore.emit('change');
+  if (DispatchHandler.hasOwnProperty(action.type)) {
+    DispatchHandler[action.type](action.data);
+    FlashStore.emit('change');
+  }
 });
 
 module.exports = FlashStore;
