@@ -10,6 +10,8 @@
   "author": "Rory Ou <ou.rory@gmail.com> (http://github.com/rorysaur)",
   "license": "MIT",
   "dependencies": {
+    "bourbon": "^4.2.1",
+    "bourbon-neat": "^1.7.2",
     "flux": "^2.0.1",
     "react": "^0.12.2"
   },
@@ -22,8 +24,19 @@
   },
   "browserify": {
     "transform": [
-      ["reactify"],
-      ["sassify", { "auto-inject": true } ]
+      [
+        "reactify"
+      ],
+      [
+        "sassify",
+        {
+          "auto-inject": true,
+          "includePaths": [
+            "node_modules/bourbon/app/assets/stylesheets",
+            "node_modules/bourbon-neat/app/assets/stylesheets"
+          ]
+        }
+      ]
     ]
   }
 }
