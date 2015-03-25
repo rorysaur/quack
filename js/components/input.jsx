@@ -7,14 +7,11 @@ var KeyCodes = {
 
 var Input = React.createClass({
   render: function() {
-    var style = {
-      width: '1000px'
-    };
 
     return (
       <input
+        className='chat-input'
         type='text'
-        style={style}
         value={this.state.message}
         onChange={this._onChange}
         onKeyDown={this._onKeyDown}

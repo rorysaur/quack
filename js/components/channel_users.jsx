@@ -9,7 +9,7 @@ var ChannelUsers = React.createClass({
       );
     });
     return(
-      <ul>
+      <ul className="channel-users">
         {names}
       </ul>
     );
