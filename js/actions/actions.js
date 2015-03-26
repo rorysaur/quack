@@ -1,15 +1,17 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
-var Firebase = require('firebase');
+var QuackData = require('../data/data');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
-var FirebaseUtils = require('../utils/firebase');
-
-var FirebaseRef = new Firebase('https://quack.firebaseio.com');
 
 module.exports = {
   createMessage: function(text) {
     var timestamp = new Date().getTime();
+    var message = {
+      text: text,
+      timestamp: timestamp,
+      user: 'guest' // hard-code for now
+    };
 
     // optimistic dispatch
     AppDispatcher.dispatch({
@@ -22,35 +24,37 @@ module.exports = {
       }
     });
 
-    // hard-code "bestcohort" for now
-    var messagesRef = FirebaseRef.child('messages/bestcohort');
-    messagesRef.push({
-      text: text,
-      timestamp: timestamp,
-      user: 'guest' // hard-code for now
-    }, function(error) {
-      if (error) {
+    QuackData.create('message', {
+      message: message,
+      success: function() {
+        AppDispatcher.dispatch({
+          type: ActionTypes.NEW_MESSAGE_SUCCESS
+        });
+      },
+      error: function(err) {
         AppDispatcher.dispatch({
           type: ActionTypes.NEW_MESSAGE_ERROR
         });
-        console.log(error);
-        return;
+        console.log(err);
       }
-
-      AppDispatcher.dispatch({
-        type: ActionTypes.NEW_MESSAGE_SUCCESS
-      });
     });
   },
 
   loadChannelMessages: function(channelName) {
-    var messagesRef = FirebaseRef.child('messages/' + channelName);
-    messagesRef.on('value', function(snapshot) {
-      var messages = snapshot.val();
-      AppDispatcher.dispatch({
-        type: ActionTypes.LOAD_CHANNEL_MESSAGES,
-        data: FirebaseUtils.toArray(messages)
-      });
+    QuackData.get('messages', {
+      channel: channelName,
+      success: function(messages) {
+        AppDispatcher.dispatch({
+          type: ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS,
+          data: messages
+        });
+      },
+      error: function(err) {
+        AppDispatcher.dispatch({
+          type: ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR
+        });
+        console.log(err);
+      }
     });
   },
 
