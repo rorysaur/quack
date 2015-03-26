@@ -14,7 +14,7 @@ var _users = [
   },
   {
     id: 3,
-    name: 'jack'
+    name: 'guest'
   }
 ];
 
