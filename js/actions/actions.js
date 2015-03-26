@@ -4,6 +4,13 @@ var QuackData = require('../data/data');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
 
+var dispatch = function(type, data) {
+  AppDispatcher.dispatch({
+    type: type,
+    data: data
+  });
+};
+
 module.exports = {
   createMessage: function(text) {
     var timestamp = new Date().getTime();
@@ -14,27 +21,23 @@ module.exports = {
     };
 
     // optimistic dispatch
-    AppDispatcher.dispatch({
-      type: ActionTypes.NEW_MESSAGE,
-      data: {
+    dispatch(
+      ActionTypes.NEW_MESSAGE,
+      {
         text: text,
         user: 'guest', // hard-code for now
         timestamp: timestamp,
         local: true
       }
-    });
+    );
 
     QuackData.create('message', {
       message: message,
       success: function() {
-        AppDispatcher.dispatch({
-          type: ActionTypes.NEW_MESSAGE_SUCCESS
-        });
+        dispatch(ActionTypes.NEW_MESSAGE_SUCCESS);
       },
       error: function(err) {
-        AppDispatcher.dispatch({
-          type: ActionTypes.NEW_MESSAGE_ERROR
-        });
+        dispatch(ActionTypes.NEW_MESSAGE_ERROR);
         console.log(err);
       }
     });
@@ -44,15 +47,13 @@ module.exports = {
     QuackData.get('messages', {
       channel: channelName,
       success: function(messages) {
-        AppDispatcher.dispatch({
-          type: ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS,
-          data: messages
-        });
+        dispatch(
+          ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS,
+          messages
+        );
       },
       error: function(err) {
-        AppDispatcher.dispatch({
-          type: ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR
-        });
+        dispatch(ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR);
         console.log(err);
       }
     });
@@ -63,46 +64,44 @@ module.exports = {
   },
 
   renameLocalUser: function(newName) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.RENAME_LOCAL_USER,
-      data: {
+    dispatch(
+      ActionTypes.RENAME_LOCAL_USER,
+      {
         newName: newName
       }
-    });
+    );
   },
 
   changeSetting: function(change) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.CHANGE_SETTING,
-      data: {
+    dispatch(
+      ActionTypes.CHANGE_SETTING,
+      {
         variable: change.variable,
         value: change.value
       }
-    });
+    );
   },
 
   clearFlash: function() {
-    AppDispatcher.dispatch({
-      type: ActionTypes.CLEAR_FLASH
-    });
+    dispatch(ActionTypes.CLEAR_FLASH);
   },
 
   editLastMessage: function(edits) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.EDIT_LAST_MESSAGE,
-      data: {
+    dispatch(
+      ActionTypes.EDIT_LAST_MESSAGE,
+      {
         find: edits.find,
         replaceWith: edits.replaceWith
       }
-    });
+    );
   },
 
   flashNotify: function(message) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.NOTIFY,
-      data: {
+    dispatch(
+      ActionTypes.NOTIFY,
+      {
         message: message
       }
-    });
+    );
   }
 };
