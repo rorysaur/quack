@@ -3,22 +3,7 @@ var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
-var _messages = [
-  {
-    id: 1,
-    timestamp: new Date().getTime(),
-    user: 'rory',
-    text: 'hihi',
-    local: false
-  },
-  {
-    id: 2,
-    timestamp: new Date().getTime(),
-    user: 'iz',
-    text: 'omg hi',
-    local: false
-  }
-];
+var _messages = [];
 
 var MessageStore = assign({}, EventEmitter.prototype, {
 
@@ -39,6 +24,10 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 });
 
 var DispatchHandler = {};
+
+DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES] = function(messages) {
+  _messages = messages;
+};
 
 DispatchHandler[ActionTypes.NEW_MESSAGE] = function(data) {
   var message = {

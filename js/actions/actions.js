@@ -3,6 +3,7 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var Firebase = require('firebase');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
+var FirebaseUtils = require('../utils/firebase');
 
 var FirebaseRef = new Firebase('https://quack.firebaseio.com');
 
@@ -38,6 +39,17 @@ module.exports = {
 
       AppDispatcher.dispatch({
         type: ActionTypes.NEW_MESSAGE_SUCCESS
+      });
+    });
+  },
+
+  loadChannelMessages: function(channelName) {
+    var messagesRef = FirebaseRef.child('messages/' + channelName);
+    messagesRef.on('value', function(snapshot) {
+      var messages = snapshot.val();
+      AppDispatcher.dispatch({
+        type: ActionTypes.LOAD_CHANNEL_MESSAGES,
+        data: FirebaseUtils.toArray(messages)
       });
     });
   },

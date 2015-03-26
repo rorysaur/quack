@@ -1,4 +1,5 @@
 var React = require('react');
+var Actions = require('../actions/actions');
 var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
 
@@ -24,6 +25,7 @@ var ChannelMessages = React.createClass({
 
   componentDidMount: function() {
     MessageStore.on('change', this.messageStoreChange);
+    Actions.loadChannelMessages('bestcohort'); // TODO use channel name
   },
 
   messageStoreChange: function() {
