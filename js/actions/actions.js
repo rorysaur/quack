@@ -1,19 +1,45 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var Firebase = require('firebase');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
 
+var FirebaseRef = new Firebase('https://quack.firebaseio.com');
+
 module.exports = {
   createMessage: function(text) {
+    var timestamp = new Date().getTime();
+
+    // optimistic dispatch
     AppDispatcher.dispatch({
       type: ActionTypes.NEW_MESSAGE,
       data: {
         text: text,
-        user: UserStore.localUser().name,
-        timestamp: new Date().getTime(),
+        user: 'guest', // hard-code for now
+        timestamp: timestamp,
         local: true
       }
-   });
+    });
+
+    // hard-code "bestcohort" for now
+    var messagesRef = FirebaseRef.child('messages/bestcohort');
+    messagesRef.push({
+      text: text,
+      timestamp: timestamp,
+      user: 'guest' // hard-code for now
+    }, function(error) {
+      if (error) {
+        AppDispatcher.dispatch({
+          type: ActionTypes.NEW_MESSAGE_ERROR
+        });
+        console.log(error);
+        return;
+      }
+
+      AppDispatcher.dispatch({
+        type: ActionTypes.NEW_MESSAGE_SUCCESS
+      });
+    });
   },
 
   userCommand: function(text) {
