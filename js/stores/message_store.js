@@ -25,7 +25,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
 var DispatchHandler = {};
 
-DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES] = function(messages) {
+DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) {
   _messages = messages;
 };
 

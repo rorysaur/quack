@@ -2,7 +2,8 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = {
   ActionTypes: keyMirror({
-    LOAD_CHANNEL_MESSAGES: null,
+    LOAD_CHANNEL_MESSAGES_SUCCESS: null,
+    LOAD_CHANNEL_MESSAGES_ERROR: null,
     NEW_MESSAGE: null,
     NEW_MESSAGE_SUCCESS: null,
     NEW_MESSAGE_ERROR: null,
