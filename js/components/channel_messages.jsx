@@ -1,12 +1,14 @@
 var React = require('react');
 var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
+var TimePresenter = require('../utils/time_presenter');
 
 var ChannelMessages = React.createClass({
   render: function() {
     var messageNodes = this.state.messages.map(function(message) {
+      displayTime = TimePresenter.presentMessageTime(message.timestamp);
       return (
-        <Message message={message}>
+        <Message message={message} displayTime={displayTime}>
         </Message>
       );
     });

@@ -3,6 +3,7 @@
 
 .quack {
   @include outer-container;
+  font-family: Courier;
   .channel-list {
     @include span-columns(2);
     border-style: solid;
