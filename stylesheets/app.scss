@@ -1,13 +1,16 @@
 @import "bourbon";
 @import "neat";
+@import "colors";
 
 .quack {
   @include outer-container;
   font-family: Courier;
+  background-color: $base03;
+  color: $base0;
   .channel-list {
     @include span-columns(2);
     border-style: solid;
-    border-color: grey;
+    border-color: $base02;
     ul {
       list-style: none;
       padding-left: 0;
@@ -20,7 +23,7 @@
     @include span-columns(10);
     @include omega;
     border-style: solid;
-    border-color: grey;
+    border-color: $base02;
 
     .channel-messages {
       @include span-columns(8 of 10);
@@ -34,11 +37,16 @@
       ul {
       }
       border-style: solid;
-      border-color: grey;
+      border-color: $base02;
     }
 
     .chat-input {
       @include span-columns(10 of 10);
+      background-color: $base03;
+      color: $base0;
+      font-family: Courier;
+      font-size: 16px;
+
     }
     
   }

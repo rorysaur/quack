@@ -6,8 +6,10 @@ var Message = React.createClass({
     var message = this.props.message;
     return (
       <div className="message">
-        <div className="message-sender">{message.user}</div>
-        <div className="message-time">{this.props.displayTime}</div>
+        <div className="sender-stamp">
+          <div className="message-sender">{message.user}</div>
+          <div className="message-time">{this.props.displayTime}</div>
+        </div>
         <div className="message-text">{message.text}</div>
       </div>
     );

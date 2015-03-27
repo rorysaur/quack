@@ -1,3 +1,25 @@
+@import 'bourbon';
+@import 'neat';
+@import 'bourbon';
+@import 'neat';
+@import 'colors';
 .message-time {
   font-size: 10px;
+}
+.message-text {
+  @include span-columns(6 of 8);
+  margin-top: 10px;
+}
+.message {
+  @include outer-container;
+  background-color: $base02;
+  padding: 5px;
+  margin: 10px;
+  .send-stamp {
+    @include span-columns(2 of 8);
+  }
+}
+
+.message-sender {
+  color: $cyan;
 }
