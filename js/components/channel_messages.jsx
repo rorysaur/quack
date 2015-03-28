@@ -23,11 +23,21 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this.messageStoreChange);
+    MessageStore.on('change', this.handleMessageChange);
   },
 
   messageStoreChange: function() {
     this.setState({messages: MessageStore.all()});
+  },
+
+  handleMessageChange: function(){
+    this.messageStoreChange();
+    this.autoScroll();
+  },
+
+  autoScroll: function(){
+    var node = this.getDOMNode();
+    node.scrollTop = node.scrollHeight;
   }
 
 });
