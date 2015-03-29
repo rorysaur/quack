@@ -6,7 +6,7 @@ var ChannelMessages = React.createClass({
   render: function() {
     var messageNodes = this.state.messages.map(function(message) {
       return (
-        <Message message={message} >
+        <Message message={message}>
         </Message>
       );
     });
