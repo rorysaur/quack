@@ -20,25 +20,26 @@ module.exports = {
       user: 'guest' // hard-code for now
     };
 
-    // optimistic dispatch
-    dispatch(
-      ActionTypes.NEW_MESSAGE,
-      {
-        text: text,
-        user: 'guest', // hard-code for now
-        timestamp: timestamp,
-        local: true
-      }
-    );
-
     QuackData.create('message', {
       message: message,
       success: function() {
-        dispatch(ActionTypes.NEW_MESSAGE_SUCCESS);
+        dispatch(ActionTypes.CREATE_MESSAGE_SUCCESS);
       },
       error: function(err) {
-        dispatch(ActionTypes.NEW_MESSAGE_ERROR);
+        dispatch(ActionTypes.CREATE_MESSAGE_ERROR);
         console.log(err);
+      }
+    });
+  },
+
+  listenForNewMessages: function(channelName) {
+    QuackData.on('new_message', {
+      channel: channelName,
+      success: function(message) {
+        dispatch(
+          ActionTypes.NEW_MESSAGE,
+          message
+        );
       }
     });
   },
@@ -56,6 +57,12 @@ module.exports = {
         dispatch(ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR);
         console.log(err);
       }
+    });
+  },
+
+  unlistenForNewMessages: function(channelName) {
+    QuackData.off('new_message', {
+      channel: channelName
     });
   },
 

@@ -76,5 +76,49 @@ module.exports = {
     if (handlers[resourceType]) {
       handlers[resourceType]();
     }
+  },
+
+  off: function(eventName, options) {
+    var handlers = {
+      new_message: function() {
+        if (!options || !options.channel) {
+          console.log('No channel specified.');
+          return;
+        }
+
+        var messagesRef = FirebaseRef.child('messages/' + options.channel);
+        messagesRef.off('child_added');
+      }
+    };
+
+    if (handlers[eventName]) {
+      handlers[eventName]();
+    }
+  },
+
+  on: function(eventName, options) {
+    var handlers = {
+      new_message: function() {
+        if (!options || !options.channel) {
+          console.log('No channel specified.');
+          if (options && options.error) {
+            options.error();
+          }
+          return;
+        }
+
+        var messagesRef = FirebaseRef.child('messages/' + options.channel);
+        messagesRef.on('child_added', function(snapshot) {
+          var newMessage = snapshot.val();
+          if (options && options.success) {
+            options.success(newMessage);
+          }
+        });
+      }
+    };
+
+    if (handlers[eventName]) {
+      handlers[eventName]();
+    }
   }
 };
