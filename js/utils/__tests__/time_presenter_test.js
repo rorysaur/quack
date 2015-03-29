@@ -9,7 +9,7 @@ describe('TimePresenter', function() {
   var oneDay = 86400000;
   var oneWeek = 604800000;
 
-  var offset = new Date().getTimezoneOffset() - 420;
+  var offset = new Date().getTimezoneOffset() - 420; // Pacific TimeZone offset in minutes. Also a drug reference.
 
   beforeEach(function() {
     TimePresenter = require('../time_presenter');
