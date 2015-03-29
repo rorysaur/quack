@@ -24,14 +24,18 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this.messageStoreChange);
+    MessageStore.on('change', this._messageStoreChange);
     Actions.loadChannelMessages('bestcohort'); // TODO use channel name
+    Actions.listenForNewMessages('bestcohort');
   },
 
-  messageStoreChange: function() {
+  componentWillUnmount: function() {
+    Actions.unlistenForNewMessages('bestcohort');
+  },
+
+  _messageStoreChange: function() {
     this.setState({messages: MessageStore.all()});
   }
-
 });
 
 module.exports = ChannelMessages;
