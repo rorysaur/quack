@@ -32,20 +32,20 @@ var TimePresenter = {
     var presentDate = new Date();
     var elapsed = presentDate - date;
     if (elapsed < oneHour) {
-      return this.inMinutes(elapsed);
+      return this._inMinutes(elapsed);
     } else if (elapsed < oneDay) {
-      return this.justTime(date);
+      return this._justTime(date);
     
     } else if (elapsed < oneDay * 2) {
-      return 'Yesterday ' + this.justTime(date);
+      return 'Yesterday ' + this._justTime(date);
     } else if (elapsed < oneWeek) {
-      return this.dayAndTime(date);
+      return this._dayAndTime(date);
     } else if (elapsed > oneWeek) {
-      return this.dateAndMonth(date);
+      return this._dateAndMonth(date);
     }
   },
 
-  inMinutes: function(milliseconds) {
+  _inMinutes: function(milliseconds) {
     var seconds = milliseconds/1000;
     var minutes = Math.floor(seconds/60);
     if (minutes <= 1) {
@@ -55,11 +55,11 @@ var TimePresenter = {
     }
   },
 
-  justTime: function(date) {
-   return date.getHours() % 12  + ':' + date.getMinutes() + ' ' + this.amOrPm(date);
+  _justTime: function(date) {
+   return date.getHours() % 12  + ':' + date.getMinutes() + ' ' + this._amOrPm(date);
   },
 
-  amOrPm: function(date) {
+  _amOrPm: function(date) {
     if (date.getHours() < 12) {
       return 'AM';
     } else {
@@ -67,11 +67,11 @@ var TimePresenter = {
     }
   },
 
-  dayAndTime: function(date) {
-    return daysOfTheWeek[date.getDay()] + ' ' + this.justTime(date);
+  _dayAndTime: function(date) {
+    return daysOfTheWeek[date.getDay()] + ' ' + this._justTime(date);
   },
 
-  dateAndMonth: function(date) {
+  _dateAndMonth: function(date) {
     return monthsOfTheYear[date.getMonth()] + ' ' + date.getDate();
   }
 };
