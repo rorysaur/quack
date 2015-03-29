@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'mixins';
+
+.message-time {
+  font-size: 10px;
+}
+.message-text {
+  margin-top: 10px;
+}
+.message {
+  background-color: $base02;
+  padding: 5px;
+  margin: 10px;
+  @include border-radius(5px);
+  .send-stamp {
+  }
+}
+
+.message-sender {
+  color: $cyan;
+}
