@@ -73,9 +73,7 @@ module.exports = {
   renameLocalUser: function(newName) {
     dispatch(
       ActionTypes.RENAME_LOCAL_USER,
-      {
-        newName: newName
-      }
+      { newName: newName }
     );
   },
 
@@ -106,9 +104,7 @@ module.exports = {
   flashNotify: function(message) {
     dispatch(
       ActionTypes.NOTIFY,
-      {
-        message: message
-      }
+      { message: message }
     );
   }
 };
