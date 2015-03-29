@@ -62,15 +62,21 @@ module.exports = {
           return;
         }
 
+        if (!options.success) {
+          console.log('No success callback specified.');
+          if (options.error) {
+            options.error();
+          }
+          return;
+        }
+
         var messagesRef = FirebaseRef.child('messages/' + options.channel);
         messagesRef.once(
           'value',
           function(snapshot) {
             var messageObjs = snapshot.val();
             var messages = FirebaseUtils.toArray(messageObjs);
-            if (options.success) {
-              options.success(messages);
-            }
+            options.success(messages);
             return;
           },
           function(err) {
@@ -121,18 +127,18 @@ module.exports = {
       new_message: function() {
         if (!options.channel) {
           console.log('No channel specified.');
-          if (options.error) {
-            options.error();
-          }
+          return;
+        }
+
+        if (!options.success) {
+          console.log('No success callback specified.');
           return;
         }
 
         var messagesRef = FirebaseRef.child('messages/' + options.channel);
         messagesRef.on('child_added', function(snapshot) {
           var newMessage = snapshot.val();
-          if (options.success) {
-            options.success(newMessage);
-          }
+          options.success(newMessage);
         });
       }
     };
