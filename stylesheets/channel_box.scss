@@ -1,0 +1,18 @@
+@import 'variables';
+
+.channel-box {
+  border-style: solid;
+  border-color: $base02;
+
+  .channel-messages {
+  }
+
+  .channel-users {
+    list-style: none;
+    padding-left: 0;
+    ul {
+    }
+    border-style: solid;
+    border-color: $base02;
+  }
+}

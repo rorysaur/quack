@@ -1,44 +1,6 @@
-@import "bourbon";
-@import "neat";
-
-.quack {
-  @include outer-container;
-  .channel-list {
-    @include span-columns(2);
-    border-style: solid;
-    border-color: grey;
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    li {
-      @include omega;
-    }
-  }
-  .channel-box {
-    @include span-columns(10);
-    @include omega;
-    border-style: solid;
-    border-color: grey;
-
-    .channel-messages {
-      @include span-columns(8 of 10);
-    }
-    
-    .channel-users {
-      @include span-columns(2 of 10);
-      @include omega;
-      list-style: none;
-      padding-left: 0;
-      ul {
-      }
-      border-style: solid;
-      border-color: grey;
-    }
-
-    .chat-input {
-      @include span-columns(10 of 10);
-    }
-    
-  }
-}
+@import 'layout';
+@import 'quack';
+@import 'chat_input';
+@import 'channel_list';
+@import 'channel_box';
+@import 'message';
