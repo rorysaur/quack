@@ -26,7 +26,7 @@
       max-height: 200px;
       overflow: auto;
     }
-    
+
     .channel-users {
       @include span-columns(2 of 10);
       @include omega;
@@ -41,6 +41,11 @@
     .chat-input {
       @include span-columns(10 of 10);
     }
-    
+
+    .new-message {
+      border-top: 2px solid blue;
+      display: none;
+    }
+
   }
 }
