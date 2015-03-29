@@ -33,18 +33,22 @@ var TimePresenter = {
     if (elapsed < oneHour) {
       return this._inMinutes(elapsed);
     } else if (elapsed < oneDay * 2) {
-      var apart = this._daysApart(currentTime, messageTime);
-      if (apart === 0) {
-        return this._justTime(messageTime);
-      } else if (apart === 1) {
-        return 'Yesterday ' + this._justTime(messageTime);
-      } else {
-        return this._dayAndTime(messageTime);
-      }
+      return this._handleLastTwoDays(currentTime, messageTime);
     } else if (elapsed < oneWeek) {
       return this._dayAndTime(messageTime);
     } else if (elapsed > oneWeek) {
       return this._dateAndMonth(messageTime);
+    }
+  },
+
+  _handleLastTwoDays: function(currentTime, messageTime) {
+    var apart = this._daysApart(currentTime, messageTime);
+    if (apart === 0) {
+      return this._justTime(messageTime);
+    } else if (apart === 1) {
+      return 'Yesterday ' + this._justTime(messageTime);
+    } else {
+      return this._dayAndTime(messageTime);
     }
   },
 
