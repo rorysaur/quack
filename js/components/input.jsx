@@ -45,6 +45,7 @@ var Input = React.createClass({
       } else {
         Actions.createMessage(this.state.message);
       }
+      this.props.onSubmit();
       this.setState({message: ''});
     }
   },

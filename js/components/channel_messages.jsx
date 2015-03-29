@@ -1,6 +1,8 @@
 var React = require('react');
 var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
+var Input = require('./input.jsx')
+var ChannelUsers = require('./channel_users.jsx');
 
 var ChannelMessages = React.createClass({
   render: function() {
@@ -11,9 +13,17 @@ var ChannelMessages = React.createClass({
       );
     });
     return (
-      <div className='channel-messages'>
-        <h1>You are in a Quack channel.</h1>
-        {messageNodes}
+      <div>
+        <div className='channel-messages' ref='chan'>
+          <h1>You are in a Quack channel.</h1>
+          {messageNodes}
+        </div>
+        <ChannelUsers/>
+        <div>
+          <Input
+            onSubmit={this.autoScroll}
+          />
+        </div>
       </div>
     );
   },
@@ -23,23 +33,17 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this.handleMessageChange);
+    MessageStore.on('change', this.messageStoreChange);
   },
 
   messageStoreChange: function() {
     this.setState({messages: MessageStore.all()});
   },
 
-  handleMessageChange: function(){
-    this.messageStoreChange();
-    this.autoScroll();
-  },
-
   autoScroll: function(){
-    var node = this.getDOMNode();
+    var node = this.refs.chan.getDOMNode();
     node.scrollTop = node.scrollHeight;
   }
-
 });
 
 module.exports = ChannelMessages;
