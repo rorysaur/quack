@@ -27,21 +27,20 @@ var monthsOfTheYear = {
 };
 
 var TimePresenter = {
-  presentMessageTime: function(timestamp) {
-    var date = new Date(timestamp);
-    var presentDate = new Date();
-    var elapsed = presentDate - date;
+  presentMessageTime: function(timestamp, rightMeow) {
+    var messageTime = new Date(timestamp);
+    var elapsed = rightMeow - messageTime;
     if (elapsed < oneHour) {
       return this._inMinutes(elapsed);
     } else if (elapsed < oneDay) {
-      return this._justTime(date);
+      return this._justTime(messageTime);
     
     } else if (elapsed < oneDay * 2) {
-      return 'Yesterday ' + this._justTime(date);
+      return 'Yesterday ' + this._justTime(messageTime);
     } else if (elapsed < oneWeek) {
-      return this._dayAndTime(date);
+      return this._dayAndTime(messageTime);
     } else if (elapsed > oneWeek) {
-      return this._dateAndMonth(date);
+      return this._dateAndMonth(messagetime);
     }
   },
 
