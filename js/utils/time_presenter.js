@@ -27,21 +27,30 @@ var monthsOfTheYear = {
 };
 
 var TimePresenter = {
-  presentMessageTime: function(timestamp, rightMeow) {
+  presentMessageTime: function(timestamp, currentTime) {
     var messageTime = new Date(timestamp);
-    var elapsed = rightMeow - messageTime;
+    var elapsed = currentTime - messageTime;
     if (elapsed < oneHour) {
       return this._inMinutes(elapsed);
-    } else if (elapsed < oneDay) {
-      return this._justTime(messageTime);
-    
     } else if (elapsed < oneDay * 2) {
-      return 'Yesterday ' + this._justTime(messageTime);
+      var apart = this._daysApart(currentTime, messageTime);
+      if (apart === 0) {
+        return this._justTime(messageTime);
+      } else if (apart === 1) {
+        return 'Yesterday ' + this._justTime(messageTime);
+      } else {
+        return this._dayAndTime(messageTime);
+      }
     } else if (elapsed < oneWeek) {
       return this._dayAndTime(messageTime);
     } else if (elapsed > oneWeek) {
-      return this._dateAndMonth(messagetime);
+      return this._dateAndMonth(messageTime);
     }
+  },
+
+  _daysApart: function(date1, date2) {
+    // This nonsense is because JavaScript doesn't have a real modulus operator
+    return (date1.getDay() - date2.getDay() + 7) % 7;
   },
 
   _inMinutes: function(milliseconds) {
