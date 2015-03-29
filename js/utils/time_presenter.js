@@ -22,7 +22,7 @@ var monthsOfTheYear = {
   7: 'August',
   8: 'September',
   9: 'October',
-  10: 'Novemeber',
+  10: 'November',
   11: 'December'
 };
 
