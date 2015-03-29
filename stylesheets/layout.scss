@@ -3,35 +3,41 @@
 
 .quack {
   @include outer-container;
-  .channel-list {
-    @include span-columns(2);
-    li {
-      @include omega;
-    }
-  }
-  .channel-box {
-    @include span-columns(10);
+}
+
+.channel-list {
+  @include span-columns(2);
+  li {
     @include omega;
-
-    .channel-messages {
-      @include span-columns(8 of 10);
-      .message-text {
-        @include span-columns(6 of 8);
-      }
-      .message {
-        @include outer-container;
-        .send-stamp {
-          @include span-columns(2 of 8);
-        }
-      }
-    }
-
-    .channel-users {
-      @include span-columns(2 of 10);
-      @include omega;
-    }
   }
-  .chat-input {
-    @include span-columns(10 of 10);
-  }
+}
+
+.channel-box {
+  @include span-columns(10);
+  @include omega;
+}
+
+.channel-messages {
+  @include span-columns(8 of 10);
+}
+
+.message-text {
+  @include span-columns(6 of 8);
+}
+
+.message {
+  @include outer-container;
+}
+
+.send-stamp {
+  @include span-columns(2 of 8);
+}
+
+.channel-users {
+  @include span-columns(2 of 10);
+  @include omega;
+}
+
+.chat-input {
+  @include span-columns(10 of 10);
 }

@@ -45,7 +45,6 @@ var ChannelMessages = React.createClass({
       this.setState({currentTime: new Date()});
     }.bind(this), 60000);
   }
-
 });
 
 module.exports = ChannelMessages;
