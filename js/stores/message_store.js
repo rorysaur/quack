@@ -29,17 +29,6 @@ DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) 
   _messages = messages;
 };
 
-DispatchHandler[ActionTypes.NEW_MESSAGE] = function(data) {
-  var message = {
-    id:  MessageStore.all().length,
-    timestamp: data.timestamp,
-    user: data.user,
-    text: data.text,
-    local: data.local
-  };
-  _messages.push(message);
-};
-
 DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
   var localMessages = MessageStore.local();
   if (localMessages.length === 0) {
@@ -47,6 +36,10 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
   }
   var lastMessage = localMessages[localMessages.length - 1];
   lastMessage.text = lastMessage.text.replace(data.find, data.replaceWith);
+};
+
+DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
+  _messages.push(message);
 };
 
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
