@@ -5,7 +5,7 @@ var TimePresenter = require('../utils/time_presenter');
 var Message = React.createClass({
   render: function() {
     var message = this.props.message;
-    var displayTime = TimePresenter.presentMessageTime(message.timestamp);
+    var displayTime = TimePresenter.presentMessageTime(message.timestamp, this.state.currentTime);
     return (
       <div className="message">
         <div className="sender-stamp">
@@ -15,6 +15,16 @@ var Message = React.createClass({
         <div className="message-text">{message.text}</div>
       </div>
     );
+  },
+
+  getInitialState: function() {
+    return { currentTime: new Date() };
+  },
+
+  componentDidMount: function() {
+    setInterval(function() {
+      this.setState({currentTime: new Date()});
+    }.bind(this), 60000);
   }
 });
 
