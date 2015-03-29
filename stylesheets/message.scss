@@ -1,8 +1,8 @@
 @import 'bourbon';
 @import 'neat';
-@import 'bourbon';
-@import 'neat';
-@import 'colors';
+@import 'variables';
+@import 'mixins';
+
 .message-time {
   font-size: 10px;
 }
@@ -15,7 +15,7 @@
   background-color: $base02;
   padding: 5px;
   margin: 10px;
-  border-radius: 5px;
+  @include border-radius(5px);
   .send-stamp {
     @include span-columns(2 of 8);
   }

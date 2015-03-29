@@ -1,0 +1,11 @@
+@import 'variables';
+
+.channel-list {
+  border-style: solid;
+  border-color: $base02;
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+

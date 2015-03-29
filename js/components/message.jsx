@@ -1,5 +1,4 @@
 var React = require('react');
-require('../../stylesheets/message.scss');
 var TimePresenter = require('../utils/time_presenter');
 
 var Message = React.createClass({
