@@ -6,11 +6,16 @@ var FirebaseRef = new Firebase('https://quack.firebaseio.com');
 
 module.exports = {
   create: function(resourceType, options) {
+    if (!options) {
+      console.log('No options specified.');
+      return;
+    }
+
     var handlers = {
       message: function() {
-        if (!options || !options.message) {
+        if (!options.message) {
           console.log('No message specified.');
-          if (options && options.error) {
+          if (options.error) {
             options.error();
           }
           return;
@@ -22,13 +27,13 @@ module.exports = {
           options.message,
           function(err) {
             if (err) {
-              if (options && options.error) {
+              if (options.error) {
                 options.error(err);
               }
               return;
             }
 
-            if (options && options.success) {
+            if (options.success) {
               options.success();
             }
           }
@@ -42,11 +47,16 @@ module.exports = {
   },
 
   get: function(resourceType, options) {
+    if (!options) {
+      console.log('No options specified.');
+      return;
+    }
+
     var handlers = {
       messages: function() {
-        if (!options || !options.channel) {
+        if (!options.channel) {
           console.log('No channel specified.');
-          if (options && options.error) {
+          if (options.error) {
             options.error();
           }
           return;
@@ -58,13 +68,13 @@ module.exports = {
           function(snapshot) {
             var messageObjs = snapshot.val();
             var messages = FirebaseUtils.toArray(messageObjs);
-            if (options && options.success) {
+            if (options.success) {
               options.success(messages);
             }
             return;
           },
           function(err) {
-            if (options && options.error) {
+            if (options.error) {
               options.error(err);
             }
             return;
@@ -79,9 +89,14 @@ module.exports = {
   },
 
   off: function(eventName, options) {
+    if (!options) {
+      console.log('No options specified.');
+      return;
+    }
+
     var handlers = {
       new_message: function() {
-        if (!options || !options.channel) {
+        if (!options.channel) {
           console.log('No channel specified.');
           return;
         }
@@ -97,11 +112,16 @@ module.exports = {
   },
 
   on: function(eventName, options) {
+    if (!options) {
+      console.log('No options specified.');
+      return;
+    }
+
     var handlers = {
       new_message: function() {
-        if (!options || !options.channel) {
+        if (!options.channel) {
           console.log('No channel specified.');
-          if (options && options.error) {
+          if (options.error) {
             options.error();
           }
           return;
@@ -110,7 +130,7 @@ module.exports = {
         var messagesRef = FirebaseRef.child('messages/' + options.channel);
         messagesRef.on('child_added', function(snapshot) {
           var newMessage = snapshot.val();
-          if (options && options.success) {
+          if (options.success) {
             options.success(newMessage);
           }
         });
