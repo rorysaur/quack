@@ -68,7 +68,7 @@ var TimePresenter = {
   },
 
   _justTime: function(date) {
-   return date.getHours() % 12  + ':' + date.getMinutes() + ' ' + this._amOrPm(date);
+   return date.getHours() % 13  + ':' + date.getMinutes() + ' ' + this._amOrPm(date);
   },
 
   _amOrPm: function(date) {
