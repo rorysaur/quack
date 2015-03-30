@@ -18,16 +18,16 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "browserify-shim": "^3.8.3",
     "jest-cli": "^0.4.0",
     "reactify": "^1.0.0",
-    "watchify": "^2.4.0",
-    "sassify": "^0.7.0"
+    "sassify": "^0.7.0",
+    "watchify": "^2.4.0"
   },
   "browserify": {
     "transform": [
-      [
-        "reactify"
-      ],
+      ["browserify-shim"],
+      ["reactify"],
       [
         "sassify",
         {
@@ -39,5 +39,8 @@
         }
       ]
     ]
+  },
+  "browserify-shim": {
+    "firebase": "global:Firebase"
   }
 }

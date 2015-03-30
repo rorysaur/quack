@@ -1,19 +1,69 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var QuackData = require('../data/data');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
 
+var dispatch = function(type, data) {
+  AppDispatcher.dispatch({
+    type: type,
+    data: data
+  });
+};
+
 module.exports = {
   createMessage: function(text) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.NEW_MESSAGE,
-      data: {
-        text: text,
-        user: UserStore.localUser().name,
-        timestamp: new Date().getTime(),
-        local: true
+    var timestamp = new Date().getTime();
+    var message = {
+      text: text,
+      timestamp: timestamp,
+      user: 'guest' // hard-code for now
+    };
+
+    QuackData.create('message', {
+      message: message,
+      success: function() {
+        dispatch(ActionTypes.CREATE_MESSAGE_SUCCESS);
+      },
+      error: function(err) {
+        dispatch(ActionTypes.CREATE_MESSAGE_ERROR);
+        console.log(err);
       }
-   });
+    });
+  },
+
+  listenForNewMessages: function(channelName) {
+    QuackData.on('new_message', {
+      channel: channelName,
+      success: function(message) {
+        dispatch(
+          ActionTypes.NEW_MESSAGE,
+          message
+        );
+      }
+    });
+  },
+
+  loadChannelMessages: function(channelName) {
+    QuackData.get('messages', {
+      channel: channelName,
+      success: function(messages) {
+        dispatch(
+          ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS,
+          messages
+        );
+      },
+      error: function(err) {
+        dispatch(ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR);
+        console.log(err);
+      }
+    });
+  },
+
+  unlistenForNewMessages: function(channelName) {
+    QuackData.off('new_message', {
+      channel: channelName
+    });
   },
 
   userCommand: function(text) {
@@ -21,46 +71,40 @@ module.exports = {
   },
 
   renameLocalUser: function(newName) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.RENAME_LOCAL_USER,
-      data: {
-        newName: newName
-      }
-    });
+    dispatch(
+      ActionTypes.RENAME_LOCAL_USER,
+      { newName: newName }
+    );
   },
 
   changeSetting: function(change) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.CHANGE_SETTING,
-      data: {
+    dispatch(
+      ActionTypes.CHANGE_SETTING,
+      {
         variable: change.variable,
         value: change.value
       }
-    });
+    );
   },
 
   clearFlash: function() {
-    AppDispatcher.dispatch({
-      type: ActionTypes.CLEAR_FLASH
-    });
+    dispatch(ActionTypes.CLEAR_FLASH);
   },
 
   editLastMessage: function(edits) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.EDIT_LAST_MESSAGE,
-      data: {
+    dispatch(
+      ActionTypes.EDIT_LAST_MESSAGE,
+      {
         find: edits.find,
         replaceWith: edits.replaceWith
       }
-    });
+    );
   },
 
   flashNotify: function(message) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.NOTIFY,
-      data: {
-        message: message
-      }
-    });
+    dispatch(
+      ActionTypes.NOTIFY,
+      { message: message }
+    );
   }
 };

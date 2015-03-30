@@ -1,4 +1,5 @@
 var React = require('react');
+var Actions = require('../actions/actions');
 var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
 var TimePresenter = require('../utils/time_presenter');
@@ -28,19 +29,22 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this.messageStoreChange);
-    this.startClock();
+    MessageStore.on('change', this._messageStoreChange);
+    Actions.loadChannelMessages('bestcohort'); // TODO use channel name
+    Actions.listenForNewMessages('bestcohort');
+    this._startClock();
   },
 
   componentWillUnmount: function() {
     clearInterval(this.clockId);
+    Actions.unlistenForNewMessages('bestcohort');
   },
 
-  messageStoreChange: function() {
+  _messageStoreChange: function() {
     this.setState({messages: MessageStore.all()});
   },
 
-  startClock: function() {
+  _startClock: function() {
     this.clockId = setInterval(function() {
       this.setState({currentTime: new Date()});
     }.bind(this), 60000);

@@ -3,22 +3,7 @@ var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
-var _messages = [
-  {
-    id: 1,
-    timestamp: new Date().getTime(),
-    user: 'rory',
-    text: 'hihi',
-    local: false
-  },
-  {
-    id: 2,
-    timestamp: new Date().getTime(),
-    user: 'iz',
-    text: 'omg hi',
-    local: false
-  }
-];
+var _messages = [];
 
 var MessageStore = assign({}, EventEmitter.prototype, {
 
@@ -40,15 +25,8 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
 var DispatchHandler = {};
 
-DispatchHandler[ActionTypes.NEW_MESSAGE] = function(data) {
-  var message = {
-    id:  MessageStore.all().length,
-    timestamp: data.timestamp,
-    user: data.user,
-    text: data.text,
-    local: data.local
-  };
-  _messages.push(message);
+DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) {
+  _messages = messages;
 };
 
 DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
@@ -58,6 +36,10 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
   }
   var lastMessage = localMessages[localMessages.length - 1];
   lastMessage.text = lastMessage.text.replace(data.find, data.replaceWith);
+};
+
+DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
+  _messages.push(message);
 };
 
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
