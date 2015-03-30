@@ -61,7 +61,7 @@ var TimePresenter = {
     var seconds = milliseconds/1000;
     var minutes = Math.floor(seconds/60);
     if (minutes <= 1) {
-      return 'just now';
+      return 'just meow';
     } else {
       return minutes + ' minutes ago';
     }
