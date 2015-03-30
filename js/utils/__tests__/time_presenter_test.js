@@ -4,6 +4,7 @@ describe('TimePresenter', function() {
   var TimePresenter;
   var messageTime = 1427604441289; 
   var thirtySeconds = 30000;
+  var fortyMinutes = 2400000;
   var fortyFiveMinutes = 2700000;
   var oneHour = 3600000;
   var oneDay = 86400000;
@@ -33,6 +34,11 @@ describe('TimePresenter', function() {
   it("handles 12 o'clock correction", function() {
     var displayTime = TimePresenter.presentMessageTime(messageTime - (oneHour * 9), new Date(messageTime - offset));
     expect(displayTime).toBe('12:47 PM');
+  });
+
+  it ('handles single digit minutes correctly', function() {
+    var displayTime = TimePresenter.presentMessageTime(messageTime - fortyMinutes, new Date(messageTime + (oneHour * 2) - offset));
+    expect(displayTime).toBe('9:07 PM');
   });
 
   it("displays times from yesterday with 'Yesterday at X:XX'", function() {
