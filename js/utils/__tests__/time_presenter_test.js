@@ -2,7 +2,7 @@ jest.dontMock('../time_presenter');
 
 describe('TimePresenter', function() {
   var TimePresenter;
-  var messageTime = 1427604441289; 
+  var messageTime = 1427604441289;
   var thirtySeconds = 30000;
   var fortyMinutes = 2400000;
   var fortyFiveMinutes = 2700000;
@@ -16,9 +16,9 @@ describe('TimePresenter', function() {
     TimePresenter = require('../time_presenter');
   });
 
-  it("displays times within the last minute as 'just now'", function() {
+  it("displays times within the last minute as 'just meow'", function() {
     var displayTime = TimePresenter.presentMessageTime(messageTime, new Date(messageTime + thirtySeconds - offset));
-    expect(displayTime).toBe('just now');
+    expect(displayTime).toBe('just meow');
   });
 
   it("displays times from within the hour as 'x minutes ago'", function() {
