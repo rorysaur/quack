@@ -23,7 +23,7 @@
 
     .channel-messages {
       @include span-columns(8 of 10);
-      max-height: 200px;
+      max-height: 80vh;
       overflow: auto;
     }
 
