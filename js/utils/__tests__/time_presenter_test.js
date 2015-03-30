@@ -30,6 +30,11 @@ describe('TimePresenter', function() {
     expect(displayTime).toBe('9:47 PM');
   });
 
+  it("handles 12 o'clock correction", function() {
+    var displayTime = TimePresenter.presentMessageTime(messageTime - (oneHour * 9), new Date(messageTime - offset));
+    expect(displayTime).toBe('12:47 PM');
+  });
+
   it("displays times from yesterday with 'Yesterday at X:XX'", function() {
     var displayTime = TimePresenter.presentMessageTime(messageTime, new Date(messageTime + (oneHour * 5) - offset));
     expect(displayTime).toBe('Yesterday 9:47 PM');
