@@ -32,7 +32,7 @@ module.exports = {
         actions.renameLocalUser(args[0]);
       },
 
-      config: function() {
+      set: function() {
         actions.changeSetting({
           variable: args[0],
           value: args[1]

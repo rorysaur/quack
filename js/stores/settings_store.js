@@ -4,7 +4,8 @@ var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
 var _settings = {
-  cmd: ":"
+  cmd: ':',
+  escape: '\\'
 };
 
 var SettingsStore = assign({}, EventEmitter.prototype, {

@@ -3,6 +3,7 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var QuackData = require('../data/data');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
+var SettingsStore = require('../stores/settings_store');
 
 var dispatch = function(type, data) {
   AppDispatcher.dispatch({
@@ -14,6 +15,9 @@ var dispatch = function(type, data) {
 module.exports = {
   createMessage: function(text) {
     var timestamp = new Date().getTime();
+    if (text[0] === SettingsStore.get('escape')) {
+      text = text.slice(1);
+    }
     var message = {
       text: text,
       timestamp: timestamp,
