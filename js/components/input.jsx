@@ -33,7 +33,6 @@ var Input = React.createClass({
   _onChange: function(event) {
     this.setState({
       message: event.target.value,
-      commandCharacter: this.state.commandCharacter
     });
   },
 
@@ -51,7 +50,6 @@ var Input = React.createClass({
 
   settingsStoreChange: function() {
     this.setState({
-      message: this.state.message,
       commandCharacter: SettingsStore.get("cmd")
     });
   }
