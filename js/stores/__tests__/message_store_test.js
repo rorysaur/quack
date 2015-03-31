@@ -56,8 +56,6 @@ describe('MessageStore', function() {
   });
 
   it('does not do anything if there is no message to edit', function() {
-    var messages = MessageStore.all();
-    var oldSpelling = messages[messages.length - 1].text;
     expect(function() { callback(actionEditLastMessage); }).not.toThrow();
   });
 });
