@@ -138,6 +138,7 @@ module.exports = {
         var messagesRef = FirebaseRef.child('messages/' + options.channel);
         messagesRef.on('child_added', function(snapshot) {
           var newMessage = snapshot.val();
+          newMessage.key = snapshot.key();
           options.success(newMessage);
         });
       }

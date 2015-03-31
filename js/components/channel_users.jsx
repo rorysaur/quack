@@ -3,9 +3,9 @@ var UserStore = require('../stores/user_store');
 
 var ChannelUsers = React.createClass({
   render: function() {
-    names = this.state.users.map(function(user) {
+    names = this.state.users.map(function(user, index) {
       return(
-        <li>{user.name}</li>
+        <li key={index}>{user.name}</li>
       );
     });
     return(
