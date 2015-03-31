@@ -9,7 +9,7 @@ var ChannelMessages = React.createClass({
     var messageNodes = this.state.messages.map(function(message) {
       var displayTime = TimePresenter.presentMessageTime(message.timestamp, this.state.currentTime);
       return (
-        <Message message={message} displayTime={displayTime}>
+        <Message key={message.key} message={message} displayTime={displayTime}>
         </Message>
       );
     }.bind(this));
@@ -30,8 +30,8 @@ var ChannelMessages = React.createClass({
 
   componentDidMount: function() {
     MessageStore.on('change', this._messageStoreChange);
-    Actions.loadChannelMessages('bestcohort'); // TODO use channel name
-    Actions.listenForNewMessages('bestcohort');
+    Actions.listenForNewMessages('bestcohort'); // TODO use channel name
+
     this._startClock();
   },
 
