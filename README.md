@@ -117,6 +117,51 @@ A value found at `quack --> messages --> bestcohort` would be referred to thus:
 + [off()](https://www.firebase.com/docs/web/api/query/off.html): Stops listening for a Firebase event.
 + [once()](https://www.firebase.com/docs/web/api/query/once.html): Fetches a snapshot for a given ref, and fires a callback, just once and doesn't listen for further changes.
 
+### Our "schema"
+
+Below is some example Firebase data to show our planned schema (which is a work in progress). It uses ideas and recommendations from [Firebase docs](https://www.firebase.com/docs/web/guide/structuring-data.html).
+
+The gibberish keys are unique ids, which Firebase automatically generates if you use `push` instead of `set` (i.e., if you don't provide your own key).
+
+channels-messages are associated by the messages being categorized/bucketed by channel.
+users-channels is the two-way relationship discussed in the link above.
+users-messages are associated by each message having a reference to the user id.
+
+```
+users: {
+  rorysaur: {
+    name: "rory", // this the display name and can be changed with /nick
+    channels: {
+      bestcohort: true // this is an "index" as recommended by firebase docs
+    }
+  },
+  jacknoble: {
+    name: "jack",
+    channels: {
+      bestcohort: true
+    }
+  }
+},
+
+channels: {
+  bestcohort: {
+    users: {
+      wkejfak: "rorysaur", // rory's unique id
+      iasudsd: "jacknoble", // jack's unique id
+    }
+  }
+},
+
+messages: {
+  bestcohort: {
+    qeouqdfue: {
+      timestamp: 123456789,
+      text: "hi",
+      user: "rorysaur"
+    }
+  }
+}
+```
 
 ## Dev workflow
 
