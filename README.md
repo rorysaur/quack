@@ -87,6 +87,37 @@ Watch mode for browserify: it runs browserify and rebuilds `bundle.js` every tim
 [substack/watchify](https://github.com/substack/watchify)
 
 
+## Firebase
+
+Firebase is a real-time backend platform thing that opens a WebSockets connection with each client.
+It stores data as JSON objects and its client library provides methods to write, read, and listen for changes to the data.
+
+Firebase has a dashboard/UI for looking at and managing the app's data. Collaborators will be given access to the Quack account.
+
+### Some terms
+
++ A `ref` is a reference to a node in the tree of the app's Firebase data.
+The highest-level ref you can point to (the root node) is denoted by the project name, "quack", in the Firebase dashboard.
+Setting a key on this ref adds a child to it.
+In our codebase, we get a ref for the root level, then derive any needed child refs from the root.
+A value found at `quack --> messages --> bestcohort` would be referred to thus:
+`var messagesRef = FirebaseRef.child('messages/bestcohort')`, where `/` indicates nesting.
++ A `snapshot` is the form in which Firebase sends data. It has [its own little API](https://www.firebase.com/docs/web/api/datasnapshot/), but we mainly use `val()`, to get the POJO.
+
+### Some Firebase methods we use
+
+#### For saving data
+
++ [set()](https://www.firebase.com/docs/web/api/firebase/set.html): Sets a key/value pair.
++ [push()](https://www.firebase.com/docs/web/api/firebase/push.html): Adds an item to a list. Note that Firebase does not use true lists or arrays, because indices are not reliable when you have multiple clients manipulating data simultaneously. Instead, think of `push` as `set` but, instead of providing a key, you let Firebase generate one that is unique and based on the current time. We use a `toArray` utility function that translates Firebase objects to JavaScript arrays when retrieving data.
+
+#### For retrieving data
+
++ [on()](https://www.firebase.com/docs/web/api/query/on.html): Listens for a Firebase event (something changed, added, removed, etc.), for a given ref and its children, and fires a callback.
++ [off()](https://www.firebase.com/docs/web/api/query/off.html): Stops listening for a Firebase event.
++ [once()](https://www.firebase.com/docs/web/api/query/once.html): Fetches a snapshot for a given ref, and fires a callback, just once and doesn't listen for further changes.
+
+
 ## Dev workflow
 
 In one terminal pane, navigate to the project root and run `npm start`. This runs the `start` script specified in the `package.json`, which watches for any changes in the `js/` directory, transpiles JSX to JavaScript, and concatenates everything into `js/bundle.js`.
@@ -99,6 +130,11 @@ You should be able to save changes to the `js/` directory, then refresh in the b
 Run tests with `npm test`.
 Tests go in a `__tests__` directory in the folder of the module being tested and are suffixed with `_test`.
 See [here](http://facebook.github.io/react/blog/2014/09/24/testing-flux-applications.html) for a good explanation of testing Flux with Jest.
+
+### Other Tools
+
++ [React dev tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) for Chrome.
++ [Firebase dev tools](https://chrome.google.com/webstore/detail/vulcan-by-firebase/oippbnlmebalopjbkemajgfbglcjhnbl?hl=en) for Chome (called Vulcan).
 
 ## Contributing
 
