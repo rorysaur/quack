@@ -76,8 +76,8 @@ A browserify transform (a step that can be added to the browserify concatenation
 #### sassify
 
 Compiles all your SCSS/Sass and lets you `require` and browserify it as JavaScript.
-We've turned on the auto-inject feature so when you require a scss file sassify will append a link to the compiled stylesheet to document head.
-[Like so](https://github.com/davidguttman/cssify/blob/master/browser.js#L28).
+We've turned on the auto-inject feature so when you require a scss file sassify will append a link to the compiled stylesheet to document head. [Like so](https://github.com/davidguttman/cssify/blob/master/browser.js#L28).
+
 [davidguttman/sassify](https://github.com/davidguttman/sassify)
 
 #### watchify
@@ -85,7 +85,6 @@ We've turned on the auto-inject feature so when you require a scss file sassify 
 Watch mode for browserify: it runs browserify and rebuilds `bundle.js` every time you save changes to a file in the watched project.
 
 [substack/watchify](https://github.com/substack/watchify)
-
 
 ## Firebase
 
