@@ -63,7 +63,7 @@ Lets you use browserify to require libraries that aren't CommonJS-compatible (in
 
 #### jest-cli
 
-A unit testing framework we figure will be friendly with Flux and React, seeing as it's also made by Facebook.
+A unit testing framework we figure will be friendly with Flux and React, seeing as it's also made by Facebook. It's a simple wrapper for [Jasmine](http://jasmine.github.io/) which changes the `require` function to auto-mock *everything*. This forces you to specify exactly what you're testing with `jest.dontMock()` and is great for enforcing modular code and one-way data flow. It will be super obvious your God-object is deeply intertwined with the entire app because you'll have 10 lines of boilerplate telling jest to not mock things.
 
 [facebook/jest](https://facebook.github.io/jest/)
 
@@ -76,8 +76,8 @@ A browserify transform (a step that can be added to the browserify concatenation
 #### sassify
 
 Compiles all your SCSS/Sass and lets you `require` and browserify it as JavaScript.
-How does CSS become JavaScript? I have no idea how this works. Ask @jacknoble.
-
+We've turned on the auto-inject feature so when you require a scss file sassify will append a link to the compiled stylesheet to document head.
+[Like so](https://github.com/davidguttman/cssify/blob/master/browser.js#L28).
 [davidguttman/sassify](https://github.com/davidguttman/sassify)
 
 #### watchify
