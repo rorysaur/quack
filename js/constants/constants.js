@@ -11,6 +11,7 @@ module.exports = {
     CHANGE_SETTING: null,
     CLEAR_FLASH: null,
     EDIT_LAST_MESSAGE: null,
-    NOTIFY: null
+    MESSAGE_CREATED: null,
+    NOTIFY: null,
   })
 };

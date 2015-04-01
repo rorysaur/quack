@@ -24,6 +24,8 @@ module.exports = {
       user: 'guest' // hard-code for now
     };
 
+    dispatch(ActionTypes.NEW_MESSAGE, message);
+
     QuackData.create('message', {
       message: message,
       success: function() {
@@ -37,11 +39,11 @@ module.exports = {
   },
 
   listenForNewMessages: function(channelName) {
-    QuackData.on('new_message', {
+    QuackData.on('message_created', {
       channel: channelName,
       success: function(message) {
         dispatch(
-          ActionTypes.NEW_MESSAGE,
+          ActionTypes.MESSAGE_CREATED,
           message
         );
       }
