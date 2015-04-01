@@ -2,31 +2,49 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var UUID = require('../utils/uuid');
 
-var _messages = [];
+var _successfulMessages = [];
+var _pendingMessages = {};
 
 var MessageStore = assign({}, EventEmitter.prototype, {
 
   all: function() {
-    return _messages;
+    var messages = _successfulMessages.concat(this.pending());
+    var sorted = messages.sort(function(message1, message2) {
+      return message1.timestamp - message2.timestamp;
+    });
+
+    return sorted;
   },
 
   local: function() {
     var localMessages = [];
-    _messages.forEach(function(message) {
+    _successfulMessages.forEach(function(message) {
       if (message.local === true) {
         localMessages.push(message);
       }
     });
 
     return localMessages;
+  },
+
+  pending: function() {
+    var messages = [];
+    for (var key in _pendingMessages) {
+      if (p.hasOwnProperty(key)) {
+        messages.push(_pendingMessages[key]);
+      }
+    }
+
+    return messages;
   }
 });
 
 var DispatchHandler = {};
 
 DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) {
-  _messages = messages;
+  _successfulMessages = messages;
 };
 
 DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
@@ -39,7 +57,14 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
 };
 
 DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
-  _messages.push(message);
+  message.status = "Pending";
+  message.clientId = UUID.generate();
+  _pendingMessages.push(message);
+};
+
+DispatchHandler[ActionTypes.MESSAGE_CREATED] = function(message) {
+  delete _pendingMessages[message.clientId];
+  _successfulMessages.push(message);
 };
 
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
