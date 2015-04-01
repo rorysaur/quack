@@ -32,7 +32,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   pending: function() {
     var messages = [];
     for (var key in _pendingMessages) {
-      if (p.hasOwnProperty(key)) {
+      if (_pendingMessages.hasOwnProperty(key)) {
         messages.push(_pendingMessages[key]);
       }
     }
@@ -59,7 +59,7 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
 DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
   message.status = "Pending";
   message.clientId = UUID.generate();
-  _pendingMessages.push(message);
+  _pendingMessages[message.clientId] = message;
 };
 
 DispatchHandler[ActionTypes.MESSAGE_CREATED] = function(message) {
