@@ -16,7 +16,7 @@ describe('UserCommandHandler', function() {
   });
 
   it('triggers the changeSetting action with config', function() {
-    UserCommandHandler.handle(':config cmd /', Actions);
+    UserCommandHandler.handle(':set cmd /', Actions);
     expect(Actions.changeSetting.mock.calls[0][0]).toEqual({variable: 'cmd', value: '/'});
   });
 
