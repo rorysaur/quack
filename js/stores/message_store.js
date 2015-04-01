@@ -2,7 +2,6 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
-var UUID = require('../utils/uuid');
 
 var _successfulMessages = [];
 var _pendingMessages = {};
@@ -20,7 +19,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
   local: function() {
     var localMessages = [];
-    _successfulMessages.forEach(function(message) {
+    _successfulMessages.concat(this.pending()).forEach(function(message) {
       if (message.local === true) {
         localMessages.push(message);
       }
@@ -57,14 +56,26 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
 };
 
 DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
-  message.status = "Pending";
-  message.clientId = UUID.generate();
-  _pendingMessages[message.clientId] = message;
+  messageCopy = JSON.parse(JSON.stringify(message)); // Cloning the object
+  messageCopy.status = "Pending";
+  messageCopy.key = messageCopy.clientId;
+  _pendingMessages[message.clientId] = messageCopy;
+};
+
+DispatchHandler[ActionTypes.CREATE_MESSAGE_SUCCESS] = function(message) {
+  delete _pendingMessages[message.clientId];
+  message.status = "Success";
+  _successfulMessages.push(message);
 };
 
 DispatchHandler[ActionTypes.MESSAGE_CREATED] = function(message) {
-  delete _pendingMessages[message.clientId];
-  _successfulMessages.push(message);
+  if (!_pendingMessages.hasOwnProperty(message.clientId)) {
+    _successfulMessages.push(message);
+  }
+};
+
+DispatchHandler[ActionTypes.CREATE_MESSAGE_ERROR] = function(data) {
+  _pendingMessages[message.clientId].status = "Failed";
 };
 
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {

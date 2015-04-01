@@ -124,7 +124,7 @@ module.exports = {
     }
 
     var handlers = {
-      new_message: function() {
+      message_created: function() {
         if (!options.channel) {
           console.log('No channel specified.');
           return;
