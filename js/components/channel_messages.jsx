@@ -36,6 +36,7 @@ var ChannelMessages = React.createClass({
   },
 
   componentWillUnmount: function() {
+    MessageStore.removeListener('change', this._messageStoreChange);
     clearInterval(this.clockId);
     Actions.unlistenForNewMessages('bestcohort');
   },
