@@ -26,7 +26,7 @@ module.exports = {
       clientId: UUID.generate()
     };
 
-    dispatch(ActionTypes.NEW_MESSAGE, message);
+    dispatch(ActionTypes.CREATE_MESSAGE, message);
 
     QuackData.create('message', {
       message: message,

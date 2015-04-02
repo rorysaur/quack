@@ -55,8 +55,8 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
   lastMessage.text = lastMessage.text.replace(data.find, data.replaceWith);
 };
 
-DispatchHandler[ActionTypes.NEW_MESSAGE] = function(message) {
-  messageCopy = JSON.parse(JSON.stringify(message)); // Cloning the object
+DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message) {
+  var messageCopy = JSON.parse(JSON.stringify(message)); // Cloning the object
   messageCopy.status = "Pending";
   messageCopy.key = messageCopy.clientId;
   _pendingMessages[message.clientId] = messageCopy;

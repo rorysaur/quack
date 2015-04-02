@@ -26,7 +26,7 @@ describe('MessageStore', function() {
   };
 
   var actionCreateMessage = {
-    type: ActionTypes.NEW_MESSAGE,
+    type: ActionTypes.CREATE_MESSAGE,
     data: messageData
   };
 
