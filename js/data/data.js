@@ -101,7 +101,7 @@ module.exports = {
     }
 
     var handlers = {
-      message_created: function() {
+      incoming_message: function() {
         if (!options.channel) {
           console.log('No channel specified.');
           return;
@@ -124,7 +124,7 @@ module.exports = {
     }
 
     var handlers = {
-      message_created: function() {
+      incoming_message: function() {
         if (!options.channel) {
           console.log('No channel specified.');
           return;

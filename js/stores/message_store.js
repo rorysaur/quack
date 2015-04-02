@@ -68,8 +68,8 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE_SUCCESS] = function(message) {
   _successfulMessages.push(message);
 };
 
-DispatchHandler[ActionTypes.MESSAGE_CREATED] = function(message) {
-  if (!_pendingMessages.hasOwnProperty(message.clientId)) {
+DispatchHandler[ActionTypes.INCOMING_MESSAGE] = function(message) {
+  if (!_pendingMessages.hasOwnProperty(message.clientId)) { //Filter out local client messages
     _successfulMessages.push(message);
   }
 };

@@ -44,11 +44,11 @@ module.exports = {
   },
 
   listenForNewMessages: function(channelName) {
-    QuackData.on('message_created', {
+    QuackData.on('incoming_message', {
       channel: channelName,
       success: function(message) {
         dispatch(
-          ActionTypes.MESSAGE_CREATED,
+          ActionTypes.INCOMING_MESSAGE,
           message
         );
       }
@@ -72,7 +72,7 @@ module.exports = {
   },
 
   unlistenForNewMessages: function(channelName) {
-    QuackData.off('message_created', {
+    QuackData.off('incoming_message', {
       channel: channelName
     });
   },
