@@ -3,13 +3,13 @@ var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
-var _successfulMessages = [];
+var _savedMessages = [];
 var _pendingMessages = {};
 
 var MessageStore = assign({}, EventEmitter.prototype, {
 
   all: function() {
-    var messages = _successfulMessages.concat(this.pending());
+    var messages = _savedMessages.concat(this.pending());
     var sorted = messages.sort(function(message1, message2) {
       return message1.timestamp - message2.timestamp;
     });
@@ -19,7 +19,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
   local: function() {
     var localMessages = [];
-    _successfulMessages.concat(this.pending()).forEach(function(message) {
+    _savedMessages.concat(this.pending()).forEach(function(message) {
       if (message.local === true) {
         localMessages.push(message);
       }
@@ -43,7 +43,7 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 var DispatchHandler = {};
 
 DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) {
-  _successfulMessages = messages;
+  _savedMessages = messages;
 };
 
 DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
@@ -65,12 +65,12 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message) {
 DispatchHandler[ActionTypes.CREATE_MESSAGE_SUCCESS] = function(message) {
   delete _pendingMessages[message.clientId];
   message.status = "Success";
-  _successfulMessages.push(message);
+  _savedMessages.push(message);
 };
 
 DispatchHandler[ActionTypes.INCOMING_MESSAGE] = function(message) {
   if (!_pendingMessages.hasOwnProperty(message.clientId)) { //Filter out local client messages
-    _successfulMessages.push(message);
+    _savedMessages.push(message);
   }
 };
 
