@@ -11,17 +11,17 @@ describe('UserCommandHandler', function() {
   });
 
   it('triggers the renameLocalUser action with nick', function() {
-    UserCommandHandler.handle(':nick Micky', Actions);
+    UserCommandHandler.handle('/nick Micky', Actions);
     expect(Actions.renameLocalUser.mock.calls[0][0]).toBe('Micky');
   });
 
   it('triggers the changeSetting action with config', function() {
-    UserCommandHandler.handle(':set cmd /', Actions);
-    expect(Actions.changeSetting.mock.calls[0][0]).toEqual({variable: 'cmd', value: '/'});
+    UserCommandHandler.handle('/set cmd :', Actions);
+    expect(Actions.changeSetting.mock.calls[0][0]).toEqual({variable: 'cmd', value: ':'});
   });
 
   it('triggers the editLastMessage action with s', function() {
-    UserCommandHandler.handle(':s/delimeter/delimiter', Actions);
+    UserCommandHandler.handle('/s/delimeter/delimiter', Actions);
     expect(Actions.editLastMessage.mock.calls[0][0]).toEqual({find: 'delimeter', replaceWith: 'delimiter'});
   });
 });
