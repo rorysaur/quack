@@ -1,5 +1,4 @@
 var React = require('react');
-var Quack = require('./components/quack.jsx');
 require('../stylesheets/app.scss');
 
 var Router = require('react-router');
