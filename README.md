@@ -48,6 +48,12 @@ A JavaScript library for building user interfaces.
 
 [facebook/react](https://facebook.github.io/react/)
 
+#### react-router
+
+A routing library for React.
+
+[rackt/react-router](https://github.com/rackt/react-router) 
+
 #### browserify
 
 Lets you load dependencies with npm's `require()` and `module.exports` system, but on the client side.
