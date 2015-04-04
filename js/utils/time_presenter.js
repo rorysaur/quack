@@ -61,7 +61,7 @@ var TimePresenter = {
     var seconds = milliseconds/1000;
     var minutes = Math.floor(seconds/60);
     if (minutes <= 1) {
-      return 'just meow';
+      return this.initialMessage;
     } else {
       return minutes + ' minutes ago';
     }
@@ -91,7 +91,9 @@ var TimePresenter = {
 
   _dateAndMonth: function(date) {
     return monthsOfTheYear[date.getMonth()] + ' ' + date.getDate();
-  }
+  },
+
+  initialMessage: 'just meow'
 };
 
 module.exports = TimePresenter;

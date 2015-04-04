@@ -4,12 +4,16 @@ var TimePresenter = require('../utils/time_presenter');
 var Message = React.createClass({
   render: function() {
     var message = this.props.message;
-    var className = (message.status === 'Pending') ? 'message pending' : 'message';
+    var time  = this.props.displayTime;
+    var className = 'message';
+    if (message.status === 'Pending' && time !== TimePresenter.initialTime) {
+      className = className + ' pending';
+    }
     return (
       <div className={className}>
         <div className="sender-stamp">
           <div className="message-sender">{message.user}</div>
-          <div className="message-time">{this.props.displayTime}</div>
+          <div className="message-time">{time}</div>
         </div>
         <div className="message-text">{message.text}</div>
       </div>
