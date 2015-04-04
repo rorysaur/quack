@@ -66,7 +66,7 @@ describe('MessageStore', function() {
     expect(lastMessage.text).toBe(actionCreateMessage.data.text);
   });
 
-  it('initially marks a new mesage as pending', function() {
+  it('initially marks a new message as pending', function() {
     callback(actionCreateMessage);
     var message = MessageStore.all().pop();
     expect(message.status).toBe("Pending");
