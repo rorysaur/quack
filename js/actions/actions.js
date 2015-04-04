@@ -36,7 +36,10 @@ module.exports = {
       error: function(err) {
         dispatch(
           ActionTypes.CREATE_MESSAGE_ERROR,
-          {message: message, error: err}
+          {
+            message: message,
+            error: err
+          }
         );
         console.log(err);
       }
