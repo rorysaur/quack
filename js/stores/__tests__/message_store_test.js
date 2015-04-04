@@ -1,6 +1,7 @@
 jest.dontMock('../message_store');
 jest.dontMock('object-assign');
 jest.dontMock('react/lib/keyMirror');
+jest.dontMock('../../utils/help');
 
 describe('MessageStore', function() {
 

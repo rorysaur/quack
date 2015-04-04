@@ -2,6 +2,7 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var Help = require('../utils/help');
 
 var _savedMessages = [];
 var _pendingMessages = {};
@@ -19,24 +20,17 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
   local: function() {
     var localMessages = [];
-    _savedMessages.concat(this.pending()).forEach(function(message) {
+    var all = _savedMessages.concat(this.pending())
+    all.forEach(function(message) {
       if (message.local === true) {
         localMessages.push(message);
       }
     });
-
     return localMessages;
   },
 
   pending: function() {
-    var messages = [];
-    for (var key in _pendingMessages) {
-      if (_pendingMessages.hasOwnProperty(key)) {
-        messages.push(_pendingMessages[key]);
-      }
-    }
-
-    return messages;
+    return Help.toArray(_pendingMessages);
   }
 });
 
@@ -56,7 +50,7 @@ DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
 };
 
 DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message) {
-  var messageCopy = JSON.parse(JSON.stringify(message)); // Cloning the object
+  var messageCopy = Help.clone(message);
   messageCopy.status = "Pending";
   messageCopy.key = messageCopy.clientId;
   _pendingMessages[message.clientId] = messageCopy;

@@ -1,5 +1,5 @@
 var Firebase = require('firebase');
-var FirebaseUtils = require('../utils/firebase');
+var Help = require('../utils/help');
 
 // TODO put the uri in a constant / env var
 var FirebaseRef = new Firebase('https://quack.firebaseio.com');
@@ -75,7 +75,7 @@ module.exports = {
           'value',
           function(snapshot) {
             var messageObjs = snapshot.val();
-            var messages = FirebaseUtils.toArray(messageObjs);
+            var messages = Help.toArray(messageObjs);
             options.success(messages);
             return;
           },
