@@ -1,0 +1,11 @@
+@import 'variables';
+
+.about {
+  height: 1000px;
+  color: $white;
+  padding-top: 120px;
+  p {
+    @include span-columns(8);
+    @include shift(3 of 12);
+  }
+}
