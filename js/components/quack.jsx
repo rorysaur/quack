@@ -1,31 +1,25 @@
 var React = require('react');
-var ChannelMessages = require('./channel_messages.jsx');
-var ChannelUsers = require('./channel_users.jsx');
-var Input = require('./input.jsx');
-var Flash = require('./flash.jsx');
-var Quack = React.createClass({
-  render: function() {
-    return (
-      <div className="quack">
-        <div className="channel-list">
-          <h4>Channels</h4>
-          <ul>
-            <li>#fakechannel</li>
-          </ul>
-        </div>
-        <div className="channel-box">
-          <ChannelMessages>
-          </ChannelMessages>
-          <ChannelUsers>
-          </ChannelUsers>
-          <Input>
-          </Input>
-        </div>
-        <Flash></Flash>
-      </div>
-    );
-  }
+var About = require('./about.jsx');
+var Chat = require('./chat.jsx');
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
+var Link = Router.Link;
 
+var Quack = React.createClass({
+  render: function () {
+    return (
+      <div className='quack'>
+        <nav>
+          <ul>
+            <li><Link to="about">About</Link></li>
+            <li><Link to="chat">Chat</Link></li>
+          </ul>
+        </nav>
+        <RouteHandler/>
+      </div>
+    )
+  }
 });
 
 module.exports = Quack;
+

@@ -14,7 +14,8 @@
     "bourbon-neat": "^1.7.2",
     "flux": "^2.0.1",
     "object-assign": "^2.0.0",
-    "react": "^0.12.2"
+    "react": "^0.12.2",
+    "react-router": "^0.12.4"
   },
   "devDependencies": {
     "browserify": "^9.0.3",

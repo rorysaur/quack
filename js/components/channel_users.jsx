@@ -23,6 +23,10 @@ var ChannelUsers = React.createClass({
     UserStore.on('change', this.userStoreChange);
   },
 
+  componentWillUnmount: function () {
+    UserStore.removeListener('change', this.userStoreChange);
+  },
+
   userStoreChange: function() {
     this.setState({users: UserStore.all()});
   }

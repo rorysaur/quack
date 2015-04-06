@@ -1,0 +1,22 @@
+@import 'variables';
+
+nav {
+  overflow: hidden;
+  ul {
+    float: right;
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin-left: 6px;
+      margin-right: 6px;
+
+      a {
+        color: $magenta;
+        text-decoration: none;
+        &:visited {
+          color: $magenta;
+        }        
+      }
+    }
+  }
+}
