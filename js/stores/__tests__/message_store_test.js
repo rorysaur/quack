@@ -1,6 +1,7 @@
 jest.dontMock('../message_store');
 jest.dontMock('object-assign');
 jest.dontMock('react/lib/keyMirror');
+jest.dontMock('../../utils/help');
 
 describe('MessageStore', function() {
 
@@ -10,14 +11,36 @@ describe('MessageStore', function() {
   
   var ActionTypes = require('../../constants/constants').ActionTypes;
 
+  var messageData = {
+    user: 'Ajax',
+    text: "Hello, everyone I'm nw.",
+    timestamp: new Date().getTime(),
+    local: true,
+    clientId: 'l34j32349d0sjdf1kl00.0dsofjdsfjdsp'
+  };
+
+  var incomingMessageData = {
+    user: 'Breakfast',
+    test: "Me too",
+    timestamp: new Date().getTime(),
+    clientId: 'sdif903409rjodfg02923.dsf9020934u8391'
+  };
+
   var actionCreateMessage = {
-    type: ActionTypes.NEW_MESSAGE,
-    data: {
-      user: 'Bob',
-      text: "Hello, everyone I'm nw.",
-      timestamp: new Date().getTime(),
-      local: true
-    }
+    type: ActionTypes.CREATE_MESSAGE,
+    data: messageData
+  };
+
+  var actionCreateMessageSuccess = {
+    type: ActionTypes.CREATE_MESSAGE_SUCCESS,
+    data: messageData
+  };
+
+  var actionIncomingMessage = function(data) {
+    return {
+      type: ActionTypes.INCOMING_MESSAGE,
+      data: data
+    };
   };
 
   var actionEditLastMessage = {
@@ -42,6 +65,35 @@ describe('MessageStore', function() {
     var lastMessage = messages[messages.length - 1];
     expect(lastMessage.user).toBe(actionCreateMessage.data.user);
     expect(lastMessage.text).toBe(actionCreateMessage.data.text);
+  });
+
+  it('initially marks a new message as pending', function() {
+    callback(actionCreateMessage);
+    var message = MessageStore.all().pop();
+    expect(message.status).toBe("Pending");
+  });
+
+  it('it updates a messages to successful', function() {
+    callback(actionCreateMessage);
+    callback(actionCreateMessageSuccess);
+    var message = MessageStore.all().pop();
+    expect(message.status).toBe("Success");
+  });
+
+  it("it ignores incoming message for the client's own pending messages", function() {
+    callback(actionCreateMessage);
+    var messages = MessageStore.all();
+    var originalMessageCount = messages.length;
+    callback(actionIncomingMessage(messageData));
+    expect(MessageStore.all().length).toBe(originalMessageCount);
+  });
+
+  it('adds an incoming message if that message is not locally pending', function() {
+    callback(actionCreateMessage);
+    var messages = MessageStore.all();
+    var originalMessageCount = messages.length;
+    callback(actionIncomingMessage(incomingMessageData));
+    expect(MessageStore.all().length).toBe(originalMessageCount + 1);
   });
 
   it('edits the previous message', function() {

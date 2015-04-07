@@ -12,8 +12,11 @@
   padding: 5px;
   margin: 10px;
   @include border-radius(5px);
-  .send-stamp {
-  }
+}
+
+.pending {
+  border-style: dashed;
+  border-color: $orange;
 }
 
 .message-sender {

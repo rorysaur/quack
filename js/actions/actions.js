@@ -4,6 +4,7 @@ var QuackData = require('../data/data');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
 var SettingsStore = require('../stores/settings_store');
+var UUID = require('../utils/uuid');
 
 var dispatch = function(type, data) {
   AppDispatcher.dispatch({
@@ -21,27 +22,36 @@ module.exports = {
     var message = {
       text: text,
       timestamp: timestamp,
-      user: 'guest' // hard-code for now
+      user: 'guest', // hard-code for now
+      clientId: UUID.generate()
     };
+
+    dispatch(ActionTypes.CREATE_MESSAGE, message);
 
     QuackData.create('message', {
       message: message,
       success: function() {
-        dispatch(ActionTypes.CREATE_MESSAGE_SUCCESS);
+        dispatch(ActionTypes.CREATE_MESSAGE_SUCCESS, message);
       },
       error: function(err) {
-        dispatch(ActionTypes.CREATE_MESSAGE_ERROR);
+        dispatch(
+          ActionTypes.CREATE_MESSAGE_ERROR,
+          {
+            message: message,
+            error: err
+          }
+        );
         console.log(err);
       }
     });
   },
 
   listenForNewMessages: function(channelName) {
-    QuackData.on('new_message', {
+    QuackData.on('incoming_message', {
       channel: channelName,
       success: function(message) {
         dispatch(
-          ActionTypes.NEW_MESSAGE,
+          ActionTypes.INCOMING_MESSAGE,
           message
         );
       }
@@ -65,7 +75,7 @@ module.exports = {
   },
 
   unlistenForNewMessages: function(channelName) {
-    QuackData.off('new_message', {
+    QuackData.off('incoming_message', {
       channel: channelName
     });
   },
