@@ -19,14 +19,10 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   },
 
   local: function() {
-    var localMessages = [];
-    var all = _savedMessages.concat(this.pending())
-    all.forEach(function(message) {
-      if (message.local === true) {
-        localMessages.push(message);
-      }
+    var all = _savedMessages.concat(this.pending());
+    return all.filter(function(message) {
+      return message.local === true;
     });
-    return localMessages;
   },
 
   pending: function() {
