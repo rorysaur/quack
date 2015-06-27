@@ -7,6 +7,7 @@
               {vsn,"0.0.1"},
               {modules,['Elixir.Quack','Elixir.Quack.Endpoint',
                         'Elixir.Quack.ErrorView','Elixir.Quack.LayoutView',
-                        'Elixir.Quack.PageController','Elixir.Quack.PageView',
-                        'Elixir.Quack.Repo','Elixir.Quack.Router',
-                        'Elixir.Quack.Router.Helpers','Elixir.Quack.Web']}]}.
+                        'Elixir.Quack.Message','Elixir.Quack.PageController',
+                        'Elixir.Quack.PageView','Elixir.Quack.Repo',
+                        'Elixir.Quack.Router','Elixir.Quack.Router.Helpers',
+                        'Elixir.Quack.User','Elixir.Quack.Web']}]}.
