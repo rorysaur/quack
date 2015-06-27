@@ -24585,7 +24585,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Help = __webpack_require__(213);
-
 	module.exports = {
 	  create: function(resourceType, options) {
 	    if (!options) {

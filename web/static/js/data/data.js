@@ -1,5 +1,4 @@
 var Help = require('../utils/help');
-
 module.exports = {
   create: function(resourceType, options) {
     if (!options) {
