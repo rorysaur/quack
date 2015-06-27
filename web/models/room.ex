@@ -1,17 +1,16 @@
-defmodule Quack.Message do
-  use Ecto.Model
-  
-  schema "messages" do
-    field :body, :string
-    belongs_to :sender, User
-    belongs_to :room, Room
+defmodule Quack.Room do
+  use Quack.Web, :model
+
+  schema "rooms" do
+    field :name, :string
+    has_many :messages, Message
 
     timestamps
   end
 
-  @required_fields ~w(field sender_id)
+  @required_fields ~w(name)
   @optional_fields ~w()
-  
+
   @doc """
   Creates a changeset based on the `model` and `params`.
 
