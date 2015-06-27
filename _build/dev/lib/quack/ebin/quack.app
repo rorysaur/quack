@@ -1,0 +1,12 @@
+{application,quack,
+             [{registered,[]},
+              {description,"quack"},
+              {mod,{'Elixir.Quack',[]}},
+              {applications,[kernel,stdlib,elixir,phoenix,phoenix_html,cowboy,
+                             logger,phoenix_ecto,postgrex]},
+              {vsn,"0.0.1"},
+              {modules,['Elixir.Quack','Elixir.Quack.Endpoint',
+                        'Elixir.Quack.ErrorView','Elixir.Quack.LayoutView',
+                        'Elixir.Quack.PageController','Elixir.Quack.PageView',
+                        'Elixir.Quack.Repo','Elixir.Quack.Router',
+                        'Elixir.Quack.Router.Helpers','Elixir.Quack.Web']}]}.

@@ -1,47 +1,40 @@
 {
   "name": "quack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ambitious lil bro of Slack",
-  "main": "app.js",
+  "main": "./web/static/js/app.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "start": "watchify js/app.js -o js/bundle.js -v -d",
     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rorysaur/quack"
   },
   "author": "Rory Ou <ou.rory@gmail.com> (http://github.com/rorysaur)",
   "license": "MIT",
-  "dependencies": {
-    "bourbon": "^4.2.1",
-    "bourbon-neat": "^1.7.2",
-    "flux": "^2.0.1",
-    "object-assign": "^2.0.0",
-    "react": "^0.12.2",
-    "react-router": "^0.12.4"
+  "bugs": {
+    "url": "https://github.com/rorysaur/quack/issues"
   },
+  "homepage": "https://github.com/rorysaur/quack",
   "devDependencies": {
-    "browserify": "^9.0.3",
-    "browserify-shim": "^3.8.3",
-    "jest-cli": "^0.4.0",
-    "reactify": "^1.0.0",
-    "sassify": "^0.7.0",
-    "watchify": "^2.4.0"
+    "css-loader": "^0.15.1",
+    "jest-cli": "^0.4.13",
+    "jsx-loader": "^0.13.2",
+    "node-bourbon": "^4.2.3",
+    "node-libs-browser": "^0.5.2",
+    "node-neat": "^1.7.2",
+    "node-sass": "^3.2.0",
+    "sass-loader": "^1.0.2",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.9.12"
   },
-  "browserify": {
-    "transform": [
-      ["browserify-shim"],
-      ["reactify"],
-      [
-        "sassify",
-        {
-          "auto-inject": true,
-          "includePaths": [
-            "node_modules/bourbon/app/assets/stylesheets",
-            "node_modules/bourbon-neat/app/assets/stylesheets"
-          ]
-        }
-      ]
-    ]
-  },
-  "browserify-shim": {
-    "firebase": "global:Firebase"
+  "dependencies": {
+    "flux": "^2.0.3",
+    "object-assign": "^3.0.0",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
   }
 }
