@@ -1,5 +1,6 @@
 jest.dontMock('../user_command_handler');
 jest.dontMock('object-assign');
+jest.dontMock('react/lib/keyMirror');
 
 describe('UserCommandHandler', function() {
   var UserCommandHandler;
