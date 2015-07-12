@@ -1,5 +1,5 @@
 var Phoenix = require('../phoenix');
-var ChannelRoom = require('./channel_room').Room;
+var QuackRoom = require('./room');
 
 var socket = new Phoenix.Socket('ws://' + location.host + '/ws');
 socket.connect();
@@ -7,10 +7,9 @@ socket.onClose(function(e) { console.log("Close", e); });
 
 var QuackSocket = {
   socket: socket,
-
-  join: function(roomName) {
-    new ChannelRoom(socket.chan('rooms:' + roomName, {}));
+  createRoom: function(roomName) {
+    chan = socket.chan('rooms:' + roomName, {});
+    return new QuackRoom(chan);
   }
 }; 
-
 module.exports = QuackSocket;

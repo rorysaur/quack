@@ -2,7 +2,7 @@ defmodule Quack.RoomChannel do
   use Phoenix.Channel
   require Logger
 
-  def join("rooms:bestcohort", payload, socket) do
+  def join("rooms:" <> room_name, payload, socket) do
     if authorized?(payload) do
       {:ok, socket}
     else

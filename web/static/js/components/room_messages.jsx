@@ -15,7 +15,7 @@ var RoomMessages = React.createClass({
     }.bind(this));
     return (
       <div className='room-messages'>
-        <h1>You are in a Quack channel.</h1>
+        <h1>{this.props.roomName}</h1>
         {messageNodes}
       </div>
     );
@@ -23,16 +23,24 @@ var RoomMessages = React.createClass({
 
   getInitialState: function() {
     return {
-      messages: MessageStore.all(),
+      messages: MessageStore.forRoom(this.props.roomName),
       currentTime: new Date()
     };
   },
 
   componentDidMount: function() {
     MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);
-    Actions.listenForNewMessages(this.props.roomName); // TODO use room name
-
     this._startClock();
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.props.roomName != prevProps.roomName) {
+      MessageStore.removeListener('change:' + prevProps.roomName, this._messageStoreChange);
+      MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);
+      this.setState({
+        messages: MessageStore.forRoom(this.props.roomName)
+      });
+    }
   },
 
   componentWillUnmount: function() {
@@ -41,7 +49,7 @@ var RoomMessages = React.createClass({
   },
 
   _messageStoreChange: function() {
-    this.setState({messages: MessageStore.all()});
+    this.setState({messages: MessageStore.forRoom(this.props.roomName)});
   },
 
   _startClock: function() {

@@ -29,10 +29,6 @@ module.exports = {
     dispatch(ActionTypes.CREATE_MESSAGE, message);
   },
 
-  listenForNewMessages: function(roomName) {
-    QuackSocket.join(roomName);
-  },
-
   userCommand: function(text) {
     UserCommandHandler.handle(text, this);
   },

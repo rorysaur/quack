@@ -1,6 +1,5 @@
 var ActionTypes = require('../constants/constants').ActionTypes;
 var AppDispatcher = require('../dispatcher/app_dispatcher');
-var RoomStore = require('../stores/room_store');
 
 var dispatch = function(type, data) {
   AppDispatcher.dispatch({
@@ -10,15 +9,15 @@ var dispatch = function(type, data) {
 };
 
 var DispatchHandler = {};
-DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, chan) {
-  chan.push('new:msg', message);
+DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, room) {
+  if (message.roomName == room.name) {
+    room.chan.push('new:msg', message);
+  }
 };
 
-QuackChannel = {};
-
-QuackChannel.Room = function(phoenixChan) {
+var Room  = function(phoenixChan) {
   this.chan = phoenixChan;
-  this.roomName = this.chan.topic.split(':')[1];
+  this.name = this.chan.topic.split(':')[1];
   this.chan.join()
       .receive('ignore', function() { console.log('auth error'); })
       .receive('error', function(e) { console.log('errr', e);})
@@ -28,7 +27,7 @@ QuackChannel.Room = function(phoenixChan) {
 
   this.dispatchToken = AppDispatcher.register(function(action) {
     if (DispatchHandler.hasOwnProperty(action.type)) {
-      DispatchHandler[action.type](action.data, this.chan);
+      DispatchHandler[action.type](action.data, this);
     }
   }.bind(this));
 
@@ -41,10 +40,9 @@ QuackChannel.Room = function(phoenixChan) {
   });
 
   this.chan.on('new:msg', function(msg) {
-    msg.roomName = this.roomName;
+    msg.roomName = this.name;
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
 };
 
-
-module.exports = QuackChannel;
+module.exports = Room;

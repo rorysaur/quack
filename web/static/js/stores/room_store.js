@@ -2,10 +2,19 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var Help = require('../utils/help');
+var QuackSocket = require('../data/socket');
 
-_rooms = {};
+var _rooms = {
+ "bestcohort": QuackSocket.createRoom('bestcohort'),
+ "otherroom" : QuackSocket.createRoom('otherroom')
+};
 
-RoomStore = {};
+var RoomStore = {
+  allNames: function() {
+   return Object.keys(_rooms);
+  }
+};
 
 RoomStore.dispatchToken = AppDispatcher.register(function(action) {
   if (action.type === ActionTypes.ROOM_JOINED) {
