@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
-var QuackData = require('../data/data');
+var QuackSocket = require('../data/socket');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
 var SettingsStore = require('../stores/settings_store');
@@ -14,12 +14,13 @@ var dispatch = function(type, data) {
 };
 
 module.exports = {
-  createMessage: function(text) {
+  createMessage: function(channelName, text) {
     var timestamp = new Date().getTime();
     if (text[0] === SettingsStore.get('escape')) {
       text = text.slice(1);
     }
     var message = {
+      channeName: channelName,
       text: text,
       timestamp: timestamp,
       user: 'guest', // hard-code for now
@@ -29,7 +30,7 @@ module.exports = {
   },
 
   listenForNewMessages: function(channelName) {
-    QuackData.join(channelName);
+    QuackSocket.join(channelName);
   },
 
   loadChannelMessages: function(channelName) {
@@ -45,12 +46,6 @@ module.exports = {
         dispatch(ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR);
         console.log(err);
       }
-    });
-  },
-
-  unlistenForNewMessages: function(channelName) {
-    QuackData.off('incoming_message', {
-      channel: channelName
     });
   },
 

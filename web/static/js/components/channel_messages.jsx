@@ -29,16 +29,15 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this._messageStoreChange);
-    Actions.listenForNewMessages('bestcohort'); // TODO use channel name
+    MessageStore.on('change:' + this.props.channelName, this._messageStoreChange);
+    Actions.listenForNewMessages(this.props.channelName); // TODO use channel name
 
     this._startClock();
   },
 
   componentWillUnmount: function() {
-    MessageStore.removeListener('change', this._messageStoreChange);
+    MessageStore.removeListener('change:' + this.props.channelName, this._messageStoreChange);
     clearInterval(this.clockId);
-    Actions.unlistenForNewMessages('bestcohort');
   },
 
   _messageStoreChange: function() {

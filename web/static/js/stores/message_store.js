@@ -19,9 +19,14 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   },
 
   local: function() {
-    var all = _savedMessages.concat(this.pending());
-    return all.filter(function(message) {
+    return this.all().filter(function(message) {
       return message.local === true;
+    });
+  },
+
+  forChannel: function(channel) {
+    return this.all().filter(function(message) {
+      return message.channel == channel;
     });
   },
 
@@ -65,7 +70,7 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE_ERROR] = function(data) {
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
   if (DispatchHandler.hasOwnProperty(action.type)) {
     DispatchHandler[action.type](action.data);
-    MessageStore.emit('change');
+    MessageStore.emit('change:' + action.data.channelName);
   }
 });
 module.exports = MessageStore;

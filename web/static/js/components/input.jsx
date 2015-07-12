@@ -42,7 +42,7 @@ var Input = React.createClass({
       if (this.state.message[0] === this.state.commandCharacter) {
         Actions.userCommand(this.state.message);
       } else {
-        Actions.createMessage(this.state.message);
+        Actions.createMessage(this.props.ChannelName, this.state.message);
       }
       this.setState({message: ''});
     }

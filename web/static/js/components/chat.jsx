@@ -14,11 +14,11 @@ var Chat = React.createClass({
           </ul>
         </div>
         <div className="channel-box">
-          <ChannelMessages>
+          <ChannelMessages channelName="bestcohort">
           </ChannelMessages>
           <ChannelUsers>
           </ChannelUsers>
-          <Input>
+          <Input channelName="bestcohort">
           </Input>
         </div>
         <Flash></Flash>
