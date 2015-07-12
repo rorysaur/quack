@@ -6,7 +6,7 @@ var Message = React.createClass({
     var message = this.props.message;
     var time  = this.props.displayTime;
     var className = 'message';
-    if (message.status === 'Pending' && time !== TimePresenter.initialTime) {
+    if (message.status === 'Pending' && time !== TimePresenter.initialMessage) {
       className = className + ' pending';
     }
     return (
