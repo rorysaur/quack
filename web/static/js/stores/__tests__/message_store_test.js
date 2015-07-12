@@ -31,11 +31,6 @@ describe('MessageStore', function() {
     data: messageData
   };
 
-  var actionCreateMessageSuccess = {
-    type: ActionTypes.CREATE_MESSAGE_SUCCESS,
-    data: messageData
-  };
-
   var actionIncomingMessage = function(data) {
     return {
       type: ActionTypes.INCOMING_MESSAGE,
@@ -75,7 +70,7 @@ describe('MessageStore', function() {
 
   it('it updates a messages to successful', function() {
     callback(actionCreateMessage);
-    callback(actionCreateMessageSuccess);
+    callback(actionIncomingMessage(messageData));
     var message = MessageStore.all().pop();
     expect(message.status).toBe("Success");
   });

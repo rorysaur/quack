@@ -3,7 +3,6 @@ defmodule Quack.RoomChannel do
   require Logger
 
   def join("rooms:bestcohort", payload, socket) do
-    Logger.debug "joining"
     if authorized?(payload) do
       {:ok, socket}
     else
@@ -25,7 +24,6 @@ defmodule Quack.RoomChannel do
   end
 
   def handle_in("new:msg", payload, socket) do
-    Logger.debug "new message"
     broadcast! socket, "new:msg", payload
     {:noreply, socket}
   end
