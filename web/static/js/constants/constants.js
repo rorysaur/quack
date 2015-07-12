@@ -5,8 +5,6 @@ module.exports = {
     CREATE_MESSAGE: null,
     CREATE_MESSAGE_SUCCESS: null,
     CREATE_MESSAGE_ERROR: null,
-    JOIN_ROOM: null,
-    ROOM_JOINED: null,
     RENAME_LOCAL_USER: null,
     CHANGE_SETTING: null,
     CLEAR_FLASH: null,

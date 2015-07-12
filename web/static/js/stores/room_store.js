@@ -17,9 +17,6 @@ var RoomStore = {
 };
 
 RoomStore.dispatchToken = AppDispatcher.register(function(action) {
-  if (action.type === ActionTypes.ROOM_JOINED) {
-    _rooms[action.data.topic] = action.data;
-  }
 });
 
 module.exports = RoomStore;
