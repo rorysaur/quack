@@ -7,10 +7,14 @@ A humble but ambitious clone of Slack, the chat app, using React, Flux, and Fire
 `git clone https://github.com/rorysaur/quack.git`
 
 `mix deps.get, compile`
-Create a postgresql user named `quackuser` with db creation permissions.
+Create a postgresql user named `quackuser` with db creation permissions. The run:
+
 `mix ecto.create`
+
 `mix ecto.migrate`
+
 `npm install`
+
 `mix phoenix.server`
 
 Quack will be at localhost:4000.
