@@ -2,7 +2,7 @@ node_modules/**
 /deps
 /_build
 /*.ez
-/priv/static/bundle.js
+/priv/static/js/bundle.js
 *.sw*
 # Generate on crash by the VM
 erl_crash.dump

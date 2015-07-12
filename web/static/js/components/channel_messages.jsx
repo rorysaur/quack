@@ -9,7 +9,7 @@ var ChannelMessages = React.createClass({
     var messageNodes = this.state.messages.map(function(message) {
       var displayTime = TimePresenter.presentMessageTime(message.timestamp, this.state.currentTime);
       return (
-        <Message key={message.key} message={message} displayTime={displayTime}>
+        <Message key={message.clientId} message={message} displayTime={displayTime}>
         </Message>
       );
     }.bind(this));

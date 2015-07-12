@@ -52,16 +52,10 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message) {
   _pendingMessages[message.clientId] = messageCopy;
 };
 
-DispatchHandler[ActionTypes.CREATE_MESSAGE_SUCCESS] = function(message) {
+DispatchHandler[ActionTypes.INCOMING_MESSAGE] = function(message) {
   delete _pendingMessages[message.clientId];
   message.status = "Success";
   _savedMessages.push(message);
-};
-
-DispatchHandler[ActionTypes.INCOMING_MESSAGE] = function(message) {
-  if (!_pendingMessages.hasOwnProperty(message.clientId)) { //Filter out local client messages
-    _savedMessages.push(message);
-  }
 };
 
 DispatchHandler[ActionTypes.CREATE_MESSAGE_ERROR] = function(data) {

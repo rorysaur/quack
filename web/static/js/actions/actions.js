@@ -25,37 +25,11 @@ module.exports = {
       user: 'guest', // hard-code for now
       clientId: UUID.generate()
     };
-
     dispatch(ActionTypes.CREATE_MESSAGE, message);
-
-    QuackData.create('message', {
-      message: message,
-      success: function() {
-        dispatch(ActionTypes.CREATE_MESSAGE_SUCCESS, message);
-      },
-      error: function(err) {
-        dispatch(
-          ActionTypes.CREATE_MESSAGE_ERROR,
-          {
-            message: message,
-            error: err
-          }
-        );
-        console.log(err);
-      }
-    });
   },
 
   listenForNewMessages: function(channelName) {
-    QuackData.on('incoming_message', {
-      channel: channelName,
-      success: function(message) {
-        dispatch(
-          ActionTypes.INCOMING_MESSAGE,
-          message
-        );
-      }
-    });
+    QuackData.join(channelName);
   },
 
   loadChannelMessages: function(channelName) {
