@@ -7,7 +7,7 @@ var Chat = React.createClass({
   render: function() {
     return (
       <div className="chat">
-        <RoomList activeRoomChangeCallback={this.activeRoomChangeHandler} >
+        <RoomList activeRoomChangeCallback={this.activeRoomChangeHandler} active={this.state.activeRoom}>
         </RoomList>
         <ActiveRoom roomName={this.state.activeRoom}>
         </ActiveRoom>

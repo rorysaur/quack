@@ -5,7 +5,7 @@ var RoomList = React.createClass({
   render: function() {
     roomNodes = this.state.rooms.map(function(room) {
       return(
-        <li key={room} onClick={this._onClick}>{room}</li>
+        <li key={room} onClick={this._onClick} className={this.props.active == room ? 'active' : ''}>{room}</li>
       );
     }.bind(this));
     return(
@@ -21,14 +21,12 @@ var RoomList = React.createClass({
   getInitialState: function() {
     return {
       rooms: RoomStore.allNames(),
-      activeRoom: 'bestcohort'
     };
   },
 
   _onClick: function(event) {
     event.preventDefault();
     roomName = event.target.textContent;
-    this.setState({activeRoom: roomName});
     this.props.activeRoomChangeCallback(roomName);
   }
 });
