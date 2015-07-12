@@ -10,19 +10,19 @@ nav {
   @include outer-container;
 }
 
-.channel-list {
+.room-list {
   @include span-columns(2);
   li {
     @include omega;
   }
 }
 
-.channel-box {
+.active-room {
   @include span-columns(10);
   @include omega;
 }
 
-.channel-messages {
+.room-messages {
   @include span-columns(8 of 10);
 }
 
@@ -38,7 +38,7 @@ nav {
   @include span-columns(2 of 8);
 }
 
-.channel-users {
+.room-users {
   @include span-columns(2 of 10);
   @include omega;
 }

@@ -4,7 +4,7 @@ var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
 var TimePresenter = require('../utils/time_presenter');
 
-var ChannelMessages = React.createClass({
+var RoomMessages = React.createClass({
   render: function() {
     var messageNodes = this.state.messages.map(function(message) {
       var displayTime = TimePresenter.presentMessageTime(message.timestamp, this.state.currentTime);
@@ -14,7 +14,7 @@ var ChannelMessages = React.createClass({
       );
     }.bind(this));
     return (
-      <div className='channel-messages'>
+      <div className='room-messages'>
         <h1>You are in a Quack channel.</h1>
         {messageNodes}
       </div>
@@ -29,14 +29,14 @@ var ChannelMessages = React.createClass({
   },
 
   componentDidMount: function() {
-    MessageStore.on('change:' + this.props.channelName, this._messageStoreChange);
-    Actions.listenForNewMessages(this.props.channelName); // TODO use channel name
+    MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);
+    Actions.listenForNewMessages(this.props.roomName); // TODO use room name
 
     this._startClock();
   },
 
   componentWillUnmount: function() {
-    MessageStore.removeListener('change:' + this.props.channelName, this._messageStoreChange);
+    MessageStore.removeListener('change:' + this.props.roomName, this._messageStoreChange);
     clearInterval(this.clockId);
   },
 
@@ -51,4 +51,4 @@ var ChannelMessages = React.createClass({
   }
 });
 
-module.exports = ChannelMessages;
+module.exports = RoomMessages;

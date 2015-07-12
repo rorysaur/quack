@@ -1,6 +1,6 @@
 var ActionTypes = require('../constants/constants').ActionTypes;
 var AppDispatcher = require('../dispatcher/app_dispatcher');
-var ChannelStore = require('../stores/channel_store');
+var RoomStore = require('../stores/room_store');
 
 var dispatch = function(type, data) {
   AppDispatcher.dispatch({
@@ -18,15 +18,13 @@ QuackChannel = {};
 
 QuackChannel.Room = function(phoenixChan) {
   this.chan = phoenixChan;
-  this.channelName = this.chan.topic.split(':')[1];
-  var that = this;
+  this.roomName = this.chan.topic.split(':')[1];
   this.chan.join()
       .receive('ignore', function() { console.log('auth error'); })
       .receive('error', function(e) { console.log('errr', e);})
       .receive('ok', function(chan) {
-        console.log("Channel join: ", that.chan.topic );
-        dispatch(ActionTypes.CHANNEL_JOINED, that);
-      });
+        dispatch(ActionTypes.ROOM_JOINED, this);
+      }.bind(this));
 
   this.dispatchToken = AppDispatcher.register(function(action) {
     if (DispatchHandler.hasOwnProperty(action.type)) {
@@ -43,7 +41,7 @@ QuackChannel.Room = function(phoenixChan) {
   });
 
   this.chan.on('new:msg', function(msg) {
-    msg.channelName = this.channelName;
+    msg.roomName = this.roomName;
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
 };

@@ -4,10 +4,9 @@ module.exports = {
   ActionTypes: keyMirror({
     CREATE_MESSAGE: null,
     CREATE_MESSAGE_SUCCESS: null,
-    JOIN_CHANNEL: null,
-    CHANNEL_JOINED: null,
-    LOAD_CHANNEL_MESSAGES_SUCCESS: null,
-    LOAD_CHANNEL_MESSAGES_ERROR: null,
+    CREATE_MESSAGE_ERROR: null,
+    JOIN_ROOM: null,
+    ROOM_JOINED: null,
     RENAME_LOCAL_USER: null,
     CHANGE_SETTING: null,
     CLEAR_FLASH: null,

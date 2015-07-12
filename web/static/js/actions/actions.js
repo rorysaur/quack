@@ -14,13 +14,13 @@ var dispatch = function(type, data) {
 };
 
 module.exports = {
-  createMessage: function(channelName, text) {
+  createMessage: function(roomName, text) {
     var timestamp = new Date().getTime();
     if (text[0] === SettingsStore.get('escape')) {
       text = text.slice(1);
     }
     var message = {
-      channeName: channelName,
+      roomName: roomName,
       text: text,
       timestamp: timestamp,
       user: 'guest', // hard-code for now
@@ -29,24 +29,8 @@ module.exports = {
     dispatch(ActionTypes.CREATE_MESSAGE, message);
   },
 
-  listenForNewMessages: function(channelName) {
-    QuackSocket.join(channelName);
-  },
-
-  loadChannelMessages: function(channelName) {
-    QuackData.get('messages', {
-      channel: channelName,
-      success: function(messages) {
-        dispatch(
-          ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS,
-          messages
-        );
-      },
-      error: function(err) {
-        dispatch(ActionTypes.LOAD_CHANNEL_MESSAGES_ERROR);
-        console.log(err);
-      }
-    });
+  listenForNewMessages: function(roomName) {
+    QuackSocket.join(roomName);
   },
 
   userCommand: function(text) {
