@@ -50,6 +50,14 @@ module.exports = {
     );
   },
 
+  subscribe: function(roomName) {
+    dispatch(ActionTypes.SUBSCRIBE, roomName);
+  },
+
+  unsubscribe: function(roomName) {
+    dispatch(ActionTypes.UNSUBSCRIBE, roomName);
+  },
+
   clearFlash: function() {
     dispatch(ActionTypes.CLEAR_FLASH);
   },

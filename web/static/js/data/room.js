@@ -21,7 +21,9 @@ var Room  = function(phoenixChan) {
   this.chan.join()
       .receive('ignore', function() { console.log('auth error'); })
       .receive('error', function(e) { console.log('errr', e);})
-      .receive('ok', function(chan) { console.log('Joined:', this.name); }.bind(this));
+      .receive('ok', function(chan) {
+        dispatch(ActionTypes.ROOM_JOINED, this);
+      }.bind(this));
 
   this.dispatchToken = AppDispatcher.register(function(action) {
     if (DispatchHandler.hasOwnProperty(action.type)) {
@@ -41,6 +43,10 @@ var Room  = function(phoenixChan) {
     msg.roomName = this.name;
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
+};
+
+Room.prototype.leave = function() {
+  this.chan.leave();
 };
 
 module.exports = Room;

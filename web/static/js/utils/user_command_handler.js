@@ -44,6 +44,14 @@ module.exports = {
           find: args[0],
           replaceWith: args[1]
         });
+      },
+
+      join: function() {
+        actions.subscribe(args[0]);
+      },
+
+      leave: function() {
+        actions.unsubscribe(args[0]);
       }
     };
 

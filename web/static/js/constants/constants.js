@@ -11,5 +11,7 @@ module.exports = {
     EDIT_LAST_MESSAGE: null,
     INCOMING_MESSAGE: null,
     NOTIFY: null,
+    SUBSCRIBE: null,
+    UNSUBSCRIBE: null,
   })
 };
