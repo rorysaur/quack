@@ -34,6 +34,10 @@ var RoomMessages = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
+    if (this.shouldScrollBottom) {
+      var node = React.findDOMNode(this);
+      node.scrollTop = node.scrollHeight;
+    }
     if (this.props.roomName != prevProps.roomName) {
       MessageStore.removeListener('change:' + prevProps.roomName, this._messageStoreChange);
       MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);

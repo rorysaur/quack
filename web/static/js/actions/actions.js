@@ -52,10 +52,12 @@ module.exports = {
 
   subscribe: function(roomName) {
     dispatch(ActionTypes.SUBSCRIBE, roomName);
+    this.flashNotify('Joining ' + roomName);
   },
 
   unsubscribe: function(roomName) {
     dispatch(ActionTypes.UNSUBSCRIBE, roomName);
+    this.flashNotify('Leaving ' + roomName);
   },
 
   clearFlash: function() {

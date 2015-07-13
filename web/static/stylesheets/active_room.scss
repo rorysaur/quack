@@ -5,6 +5,9 @@
   border-color: $base02;
 
   .room-messages {
+    height: 600px;
+    max-height: 600px;
+    overflow: scroll;
   }
 
   .room-users {
