@@ -4,6 +4,10 @@ defmodule Quack.RoomChannel do
 
   def join("rooms:" <> room_name, payload, socket) do
     if authorized?(payload) do
+      unless Quack.Repo.get_by(Quack.Room, name: room_name) do
+        Quack.Repo.insert! %Quack.Room{name: room_name}
+      end
+
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -24,6 +28,7 @@ defmodule Quack.RoomChannel do
   end
 
   def handle_in("new:msg", payload, socket) do
+    Quack.Repo.insert! %Quack.Message{body: payload["text"]}
     broadcast! socket, "new:msg", payload
     {:noreply, socket}
   end
