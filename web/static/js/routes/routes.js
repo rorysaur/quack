@@ -5,10 +5,12 @@ var DefaultRoute = Router.DefaultRoute;
 var About = require('../components/about.jsx');
 var Quack = require('../components/quack.jsx');
 var Chat = require('../components/chat.jsx');
+var Login = require('../components/login.jsx');
 
 var routes = (
   <Route path='/' handler={Quack}>
-    <DefaultRoute name="chat" handler={Chat} />
+    <DefaultRoute name="login" handler={Login} />
+    <Route name="chat" handler={Chat} />
     <Route name="about" handler={About}/>
   </Route>
 );

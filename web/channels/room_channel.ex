@@ -3,12 +3,15 @@ defmodule Quack.RoomChannel do
   require Logger
 
   def join("rooms:" <> room_name, payload, socket) do
+    payload = atomize_keys(payload)
     if authorized?(payload) do
       unless Quack.Repo.get_by(Quack.Room, name: room_name) do
         Quack.Repo.insert! %Quack.Room{name: room_name}
       end
+      Quack.RoomUsers.add_room(room_name)
+      Quack.RoomUsers.add_user(room_name, payload.user.name)
 
-      {:ok, socket}
+      {:ok, Quack.RoomUsers.get_room(room_name), socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
@@ -44,5 +47,12 @@ defmodule Quack.RoomChannel do
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true
+  end
+
+  defp atomize_keys(struct) do
+    Enum.reduce(struct, %{}, fn({k, v}, map) ->
+      val = if is_map(v), do: atomize_keys(v), else: v
+      Map.put(map, String.to_atom(k), val)
+    end)
   end
 end

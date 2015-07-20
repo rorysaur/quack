@@ -17,6 +17,14 @@ var _rooms = {
 };
 
 var RoomStore = assign({}, EventEmitter.prototype, {
+  byName: function(name) {
+    if (subscribed[name] !== null) {
+      return _rooms.subscribed[name];
+    } else if (unsubscribed[name] !== null) {
+      return _rooms.unsubscribed[name];
+    }
+  },
+
   subscribed: function() {
     return Object.keys(_rooms.subscribed);
   },

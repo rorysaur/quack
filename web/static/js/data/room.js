@@ -1,5 +1,6 @@
 var ActionTypes = require('../constants/constants').ActionTypes;
 var AppDispatcher = require('../dispatcher/app_dispatcher');
+var UserStore = require("../stores/user_store");
 
 var dispatch = function(type, data) {
   AppDispatcher.dispatch({
@@ -17,12 +18,14 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, room) {
 
 var Room  = function(phoenixChan) {
   this.chan = phoenixChan;
+  this.chan.params.user = UserStore.localUser();
   this.name = this.chan.topic.split(':')[1];
+  this.users = [];
   this.chan.join()
       .receive('ignore', function() { console.log('auth error'); })
       .receive('error', function(e) { console.log('errr', e);})
-      .receive('ok', function(chan) {
-        dispatch(ActionTypes.ROOM_JOINED, this);
+      .receive('ok', function(roomUsers) {
+        this.users = roomUsers;
       }.bind(this));
 
   this.dispatchToken = AppDispatcher.register(function(action) {

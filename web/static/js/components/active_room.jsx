@@ -10,7 +10,7 @@ var ActiveRoom = React.createClass({
       <div className="active-room">
         <RoomMessages roomName = {this.props.roomName}>
         </RoomMessages>
-        <RoomUsers>
+        <RoomUsers roomName = {this.props.roomName}>
         </RoomUsers>
         <Input roomName = {this.props.roomName}>
         </Input>

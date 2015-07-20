@@ -4,6 +4,7 @@
 
 .chat {
   @include outer-container;
+  height: 100%;
 }
 
 nav {
@@ -11,6 +12,7 @@ nav {
 }
 
 .room-list {
+  height: 100%;
   @include span-columns(2);
   li {
     @include omega;
@@ -18,6 +20,7 @@ nav {
 }
 
 .active-room {
+  height: 100%;
   @include span-columns(10);
   @include omega;
 }

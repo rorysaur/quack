@@ -5,11 +5,12 @@ defmodule Quack.RoomUsers do
   end
 
   def add_room(roomname) do
-    Agent.update(@name, &HashDict.put(&1, roomname, []))
+    Agent.update(@name, &HashDict.put_new(&1, roomname, HashSet.new))
   end
 
   def get_room(roomname) do
-    Agent.get(@name, &HashDict.fetch(&1, roomname))
+    {:ok, room} = Agent.get(@name, &HashDict.fetch(&1, roomname))
+    HashSet.to_list(room)
   end
 
   def drop_room(roomname) do
@@ -19,14 +20,14 @@ defmodule Quack.RoomUsers do
   def add_user(roomname, user) do
     Agent.update(@name, fn(rooms) ->
       Dict.update!(rooms, roomname, fn(room) ->
-        [user | room]
+        HashSet.put(room, user)
       end)
     end)
   end
 
   def remove_user(roomname, user) do
     Agent.update(@name, fn(rooms) ->
-      Dict.update!(rooms, roomname, &List.delete(&1, user))
+      Dict.update!(rooms, roomname, &HashSet.delete(&1, user))
     end)
   end
 end
