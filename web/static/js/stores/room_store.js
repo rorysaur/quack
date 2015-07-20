@@ -8,7 +8,6 @@ var QuackSocket = require('../data/socket');
 var _rooms = {
   subscribed: {
     "bestcohort": QuackSocket.createRoom('bestcohort'),
-    "otherroom" : QuackSocket.createRoom('otherroom')
   },
 
   unsubscribed: {

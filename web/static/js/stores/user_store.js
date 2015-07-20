@@ -5,7 +5,7 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 
 var _localUser = {
   id: 3,
-  name: 'jack'
+  name: null
 };
 
 var UserStore = assign({}, EventEmitter.prototype, {

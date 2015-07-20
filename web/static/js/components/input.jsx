@@ -1,9 +1,7 @@
 var React = require('react');
 var Actions = require('../actions/actions');
 var SettingsStore = require('../stores/settings_store');
-var KeyCodes = {
-  enter: 13
-};
+var KeyCodes = require('../utils/keycodes');
 
 var Input = React.createClass({
   render: function() {
