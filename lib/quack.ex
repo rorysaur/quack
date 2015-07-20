@@ -13,6 +13,7 @@ defmodule Quack do
       worker(Quack.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Quack.Worker, [arg1, arg2, arg3]),
+      worker(Quack.RoomUsers, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

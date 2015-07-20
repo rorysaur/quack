@@ -23,7 +23,7 @@ module.exports = {
       roomName: roomName,
       text: text,
       timestamp: timestamp,
-      user: 'guest', // hard-code for now
+      user: UserStore.localUser().name,
       clientId: UUID.generate()
     };
     dispatch(ActionTypes.CREATE_MESSAGE, message);

@@ -36,7 +36,7 @@ var Room  = function(phoenixChan) {
   });
 
   this.chan.onClose(function(e) {
-     console.log('channel closed', e);
+    console.log('channel closed', e);
   });
 
   this.chan.on('new:msg', function(msg) {
