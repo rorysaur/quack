@@ -10,29 +10,31 @@ defmodule Quack.RoomChannel do
       end
       Quack.RoomUsers.add_room(room_name)
       Quack.RoomUsers.add_user(room_name, payload.user.name)
-
+      send(self, "user:joined")
       {:ok, Quack.RoomUsers.get_room(room_name), socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
-  end
-
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (rooms:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+  def handle_info("user:joined", socket) do
+    "rooms:" <> room_name = socket.topic
+    broadcast! socket, "join:notification", %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 
   def handle_in("new:msg", payload, socket) do
     Quack.Repo.insert! %Quack.Message{body: payload["text"]}
     broadcast! socket, "new:msg", payload
+    {:noreply, socket}
+  end
+
+  def handle_in("nick:change", payload, socket) do
+    payload = atomize_keys(payload)
+    "rooms:" <> room_name = socket.topic
+    Quack.RoomUsers.remove_user(room_name, payload.oldName)
+    Quack.RoomUsers.add_user(room_name, payload.newName)
+    broadcast! socket, "nick:changed", %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 

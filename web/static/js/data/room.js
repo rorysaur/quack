@@ -16,6 +16,10 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, room) {
   }
 };
 
+DispatchHandler[ActionTypes.RENAME_LOCAL_USER] = function(data, room) {
+  room.chan.push('nick:change', data);
+};
+
 var Room  = function(phoenixChan) {
   this.chan = phoenixChan;
   this.chan.params.user = UserStore.localUser();
@@ -26,6 +30,7 @@ var Room  = function(phoenixChan) {
       .receive('error', function(e) { console.log('errr', e);})
       .receive('ok', function(roomUsers) {
         this.users = roomUsers;
+        dispatch(ActionTypes.USER_JOINED, {roomName: this.name});
       }.bind(this));
 
   this.dispatchToken = AppDispatcher.register(function(action) {
@@ -46,10 +51,21 @@ var Room  = function(phoenixChan) {
     msg.roomName = this.name;
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
+
+  this.chan.on('join:notification', function(msg) {
+    this.users = msg.users;
+    dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
+  }.bind(this));
+
+  this.chan.on('nick:changed', function(msg) {
+    this.users = msg.users;
+    dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
+  }.bind(this));
 };
 
 Room.prototype.leave = function() {
   this.chan.leave();
 };
+
 
 module.exports = Room;

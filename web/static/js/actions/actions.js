@@ -36,7 +36,7 @@ module.exports = {
   renameLocalUser: function(newName) {
     dispatch(
       ActionTypes.RENAME_LOCAL_USER,
-      { newName: newName }
+      { newName: newName, oldName: UserStore.localUser().name }
     );
   },
 

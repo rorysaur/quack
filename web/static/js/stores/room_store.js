@@ -54,15 +54,21 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 var DispatchHandler = {};
 DispatchHandler[ActionTypes.SUBSCRIBE] = function(data) {
   RoomStore.subscribe(data);
+  RoomStore.emit('change');
 };
+
 DispatchHandler[ActionTypes.UNSUBSCRIBE] = function(data) {
   RoomStore.unsubscribe(data);
+  RoomStore.emit('change');
+};
+
+DispatchHandler[ActionTypes.USER_LIST_CHANGE] = function(data) {
+  RoomStore.emit('change' + data.roomName);
 };
 
 RoomStore.dispatchToken = AppDispatcher.register(function(action) {
   if (DispatchHandler.hasOwnProperty(action.type)) {
     DispatchHandler[action.type](action.data);
-    RoomStore.emit('change');
   }
 });
 
