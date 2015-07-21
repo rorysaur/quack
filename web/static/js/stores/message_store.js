@@ -19,9 +19,14 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   },
 
   local: function() {
-    var all = _savedMessages.concat(this.pending());
-    return all.filter(function(message) {
+    return this.all().filter(function(message) {
       return message.local === true;
+    });
+  },
+
+  forRoom: function(roomName) {
+    return this.all().filter(function(message) {
+      return message.roomName == roomName;
     });
   },
 
@@ -31,10 +36,6 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 });
 
 var DispatchHandler = {};
-
-DispatchHandler[ActionTypes.LOAD_CHANNEL_MESSAGES_SUCCESS] = function(messages) {
-  _savedMessages = messages;
-};
 
 DispatchHandler[ActionTypes.EDIT_LAST_MESSAGE] = function(data) {
   var localMessages = MessageStore.local();
@@ -65,7 +66,7 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE_ERROR] = function(data) {
 MessageStore.dispatchToken = AppDispatcher.register(function(action) {
   if (DispatchHandler.hasOwnProperty(action.type)) {
     DispatchHandler[action.type](action.data);
-    MessageStore.emit('change');
+    MessageStore.emit('change:' + action.data.roomName);
   }
 });
 module.exports = MessageStore;

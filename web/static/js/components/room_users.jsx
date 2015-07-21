@@ -1,7 +1,7 @@
 var React = require('react');
 var UserStore = require('../stores/user_store');
 
-var ChannelUsers = React.createClass({
+var RoomUsers = React.createClass({
   render: function() {
     names = this.state.users.map(function(user, index) {
       return(
@@ -9,7 +9,7 @@ var ChannelUsers = React.createClass({
       );
     });
     return(
-      <ul className="channel-users">
+      <ul className="room-users">
         {names}
       </ul>
     );
@@ -31,4 +31,4 @@ var ChannelUsers = React.createClass({
     this.setState({users: UserStore.all()});
   }
 });
-module.exports = ChannelUsers;
+module.exports = RoomUsers;

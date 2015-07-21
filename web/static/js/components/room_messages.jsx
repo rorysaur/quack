@@ -4,7 +4,7 @@ var Message = require('./message.jsx');
 var MessageStore = require('../stores/message_store');
 var TimePresenter = require('../utils/time_presenter');
 
-var ChannelMessages = React.createClass({
+var RoomMessages = React.createClass({
   render: function() {
     var messageNodes = this.state.messages.map(function(message) {
       var displayTime = TimePresenter.presentMessageTime(message.timestamp, this.state.currentTime);
@@ -14,8 +14,8 @@ var ChannelMessages = React.createClass({
       );
     }.bind(this));
     return (
-      <div className='channel-messages'>
-        <h1>You are in a Quack channel.</h1>
+      <div className='room-messages'>
+        <h1>{this.props.roomName}</h1>
         {messageNodes}
       </div>
     );
@@ -23,26 +23,37 @@ var ChannelMessages = React.createClass({
 
   getInitialState: function() {
     return {
-      messages: MessageStore.all(),
+      messages: MessageStore.forRoom(this.props.roomName),
       currentTime: new Date()
     };
   },
 
   componentDidMount: function() {
-    MessageStore.on('change', this._messageStoreChange);
-    Actions.listenForNewMessages('bestcohort'); // TODO use channel name
-
+    MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);
     this._startClock();
   },
 
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.shouldScrollBottom) {
+      var node = React.findDOMNode(this);
+      node.scrollTop = node.scrollHeight;
+    }
+    if (this.props.roomName != prevProps.roomName) {
+      MessageStore.removeListener('change:' + prevProps.roomName, this._messageStoreChange);
+      MessageStore.on('change:' + this.props.roomName, this._messageStoreChange);
+      this.setState({
+        messages: MessageStore.forRoom(this.props.roomName)
+      });
+    }
+  },
+
   componentWillUnmount: function() {
-    MessageStore.removeListener('change', this._messageStoreChange);
+    MessageStore.removeListener('change:' + this.props.roomName, this._messageStoreChange);
     clearInterval(this.clockId);
-    Actions.unlistenForNewMessages('bestcohort');
   },
 
   _messageStoreChange: function() {
-    this.setState({messages: MessageStore.all()});
+    this.setState({messages: MessageStore.forRoom(this.props.roomName)});
   },
 
   _startClock: function() {
@@ -52,4 +63,4 @@ var ChannelMessages = React.createClass({
   }
 });
 
-module.exports = ChannelMessages;
+module.exports = RoomMessages;

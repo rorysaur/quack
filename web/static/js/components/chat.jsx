@@ -1,31 +1,30 @@
 var React = require('react');
-var ChannelMessages = require('./channel_messages.jsx');
-var ChannelUsers = require('./channel_users.jsx');
-var Input = require('./input.jsx');
 var Flash = require('./flash.jsx');
+var ActiveRoom = require('./active_room.jsx');
+var RoomList = require('./room_list.jsx');
+
 var Chat = React.createClass({
   render: function() {
     return (
       <div className="chat">
-        <div className="channel-list">
-          <h4>Channels</h4>
-          <ul>
-            <li>#fakechannel</li>
-          </ul>
-        </div>
-        <div className="channel-box">
-          <ChannelMessages>
-          </ChannelMessages>
-          <ChannelUsers>
-          </ChannelUsers>
-          <Input>
-          </Input>
-        </div>
+        <RoomList activeRoomChangeCallback={this.activeRoomChangeHandler} active={this.state.activeRoom}>
+        </RoomList>
+        <ActiveRoom roomName={this.state.activeRoom}>
+        </ActiveRoom>
         <Flash></Flash>
       </div>
     );
-  }
+  },
 
+  activeRoomChangeHandler: function(room) {
+    this.setState({activeRoom: room});
+  },
+
+  getInitialState: function() {
+    return {
+      activeRoom: 'bestcohort'
+    };
+  }
 });
 
 module.exports = Chat;

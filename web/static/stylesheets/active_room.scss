@@ -1,13 +1,16 @@
 @import 'variables';
 
-.channel-box {
+.active-room {
   border-style: solid;
   border-color: $base02;
 
-  .channel-messages {
+  .room-messages {
+    height: 600px;
+    max-height: 600px;
+    overflow: scroll;
   }
 
-  .channel-users {
+  .room-users {
     list-style: none;
     padding-left: 0;
     ul {
