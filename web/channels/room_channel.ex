@@ -9,16 +9,17 @@ defmodule Quack.RoomChannel do
         Quack.Repo.insert! %Quack.Room{name: room_name}
       end
       Quack.RoomActivityService.register(room: room_name, user: payload.user.name, pid: socket.channel_pid)
-      send(self, "user:joined")
+      send(self, %{event: "user:joined", new_user: payload.user.name})
       {:ok, Quack.RoomUsers.get_room(room_name), socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  def handle_info("user:joined" = event, socket) do
+  def handle_info(%{event: "user:joined" = event, new_user: user}, socket) do
     "rooms:" <> room_name = socket.topic
-    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name)}
+    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name), new_user: user}
+    broadcast! socket, "new:msg", Quack.OperatorMessage.new("#{user} has joined")
     {:noreply, socket}
   end
 
@@ -47,8 +48,9 @@ defmodule Quack.RoomChannel do
 
   def terminate(error, socket) do
     "rooms:" <> room_name = socket.topic
-    Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
-    broadcast! socket, "user:left", %{users: Quack.RoomUsers.get_room(room_name), leaving_user: "user"}
+    {:ok, user} = Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    broadcast! socket, "user:left", %{users: Quack.RoomUsers.get_room(room_name), leaving_user: user}
+    broadcast! socket, "new:msg", Quack.OperatorMessage.new("#{user} has left")
   end
 
   # Add authorization logic here as required.
