@@ -31,7 +31,7 @@ var RoomList = React.createClass({
   },
 
   componentWillUnmount: function() {
-    MessageStore.removeListener('change', this._roomStoreChange);
+    RoomStore.removeListener('change', this._roomStoreChange);
   },
 
   _generateChannelLI: function(room) {

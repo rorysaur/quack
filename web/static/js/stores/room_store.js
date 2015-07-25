@@ -8,7 +8,6 @@ var QuackSocket = require('../data/socket');
 var _rooms = {
   subscribed: {
     "bestcohort": QuackSocket.createRoom('bestcohort'),
-    "otherroom" : QuackSocket.createRoom('otherroom')
   },
 
   unsubscribed: {
@@ -17,6 +16,14 @@ var _rooms = {
 };
 
 var RoomStore = assign({}, EventEmitter.prototype, {
+  byName: function(name) {
+    if (subscribed[name] !== null) {
+      return _rooms.subscribed[name];
+    } else if (unsubscribed[name] !== null) {
+      return _rooms.unsubscribed[name];
+    }
+  },
+
   subscribed: function() {
     return Object.keys(_rooms.subscribed);
   },
@@ -46,15 +53,21 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 var DispatchHandler = {};
 DispatchHandler[ActionTypes.SUBSCRIBE] = function(data) {
   RoomStore.subscribe(data);
+  RoomStore.emit('change');
 };
+
 DispatchHandler[ActionTypes.UNSUBSCRIBE] = function(data) {
   RoomStore.unsubscribe(data);
+  RoomStore.emit('change');
+};
+
+DispatchHandler[ActionTypes.USER_LIST_CHANGE] = function(data) {
+  RoomStore.emit('change' + data.roomName);
 };
 
 RoomStore.dispatchToken = AppDispatcher.register(function(action) {
   if (DispatchHandler.hasOwnProperty(action.type)) {
     DispatchHandler[action.type](action.data);
-    RoomStore.emit('change');
   }
 });
 

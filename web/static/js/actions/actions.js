@@ -23,7 +23,7 @@ module.exports = {
       roomName: roomName,
       text: text,
       timestamp: timestamp,
-      user: 'guest', // hard-code for now
+      user: UserStore.localUser().name,
       clientId: UUID.generate()
     };
     dispatch(ActionTypes.CREATE_MESSAGE, message);
@@ -36,7 +36,7 @@ module.exports = {
   renameLocalUser: function(newName) {
     dispatch(
       ActionTypes.RENAME_LOCAL_USER,
-      { newName: newName }
+      { newName: newName, oldName: UserStore.localUser().name }
     );
   },
 

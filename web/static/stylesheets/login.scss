@@ -1,0 +1,19 @@
+@import 'variables';
+
+.login {
+  height: 1000px;
+  padding-top: 120px;
+  input {
+    background-color: $base03;
+    color: $base0;
+    font-family: Courier;
+    font-size: 24px;
+    @include span-columns(4);
+    @include shift(2 of 12);
+  }
+
+  a {
+    color: $magenta;
+    font-size: 18px;
+  }
+}

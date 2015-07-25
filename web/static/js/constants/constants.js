@@ -13,5 +13,6 @@ module.exports = {
     NOTIFY: null,
     SUBSCRIBE: null,
     UNSUBSCRIBE: null,
+    USER_LIST_CHANGE: null,
   })
 };

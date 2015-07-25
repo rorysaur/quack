@@ -3,28 +3,37 @@ defmodule Quack.RoomChannel do
   require Logger
 
   def join("rooms:" <> room_name, payload, socket) do
+    payload = atomize_keys(payload)
     if authorized?(payload) do
-      {:ok, socket}
+      unless Quack.Repo.get_by(Quack.Room, name: room_name) do
+        Quack.Repo.insert! %Quack.Room{name: room_name}
+      end
+      Quack.RoomActivityService.register(room: room_name, user: payload.user.name, pid: socket.channel_pid)
+      send(self, "user:joined")
+      {:ok, Quack.RoomUsers.get_room(room_name), socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
-  end
-
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (rooms:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+  def handle_info("user:joined" = event, socket) do
+    "rooms:" <> room_name = socket.topic
+    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 
-  def handle_in("new:msg", payload, socket) do
-    broadcast! socket, "new:msg", payload
+  def handle_in("new:msg" = event, payload, socket) do
+    Quack.Repo.insert! %Quack.Message{body: payload["text"]}
+    broadcast! socket, event, payload
+    {:noreply, socket}
+  end
+
+  def handle_in("nick:change" = event, payload, socket) do
+    payload = atomize_keys(payload)
+    "rooms:" <> room_name = socket.topic
+    Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    Quack.RoomActivityService.register(room: room_name, user: payload.newName, pid: socket.channel_pid)
+    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 
@@ -36,8 +45,21 @@ defmodule Quack.RoomChannel do
     {:noreply, socket}
   end
 
+  def terminate(error, socket) do
+    "rooms:" <> room_name = socket.topic
+    Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    broadcast! socket, "user:left", %{users: Quack.RoomUsers.get_room(room_name), leaving_user: "user"}
+  end
+
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true
+  end
+
+  defp atomize_keys(struct) do
+    Enum.reduce(struct, %{}, fn({k, v}, map) ->
+      val = if is_map(v), do: atomize_keys(v), else: v
+      Map.put(map, String.to_atom(k), val)
+    end)
   end
 end

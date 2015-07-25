@@ -2,8 +2,12 @@ var React = require('react');
 var Flash = require('./flash.jsx');
 var ActiveRoom = require('./active_room.jsx');
 var RoomList = require('./room_list.jsx');
+var Navigation = require('react-router').Navigation;
+var UserStore = require('../stores/user_store');
 
 var Chat = React.createClass({
+  mixins: [Navigation],
+
   render: function() {
     return (
       <div className="chat">
@@ -24,6 +28,12 @@ var Chat = React.createClass({
     return {
       activeRoom: 'bestcohort'
     };
+  },
+
+  componentWillMount: function() {
+    if (UserStore.localUser().name === null) {
+      this.transitionTo('login');
+    }
   }
 });
 
