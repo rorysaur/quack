@@ -2,13 +2,26 @@
 @import 'neat';
 
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#react {
+  height: 100%;
+}
+
 .chat {
   @include outer-container;
-  height: 100%;
+  height: 90%;
 }
 
 nav {
   @include outer-container;
+  height: 10%;
 }
 
 .room-list {
