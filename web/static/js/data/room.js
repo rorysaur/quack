@@ -52,12 +52,17 @@ var Room  = function(phoenixChan) {
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
 
-  this.chan.on('join:notification', function(msg) {
+  this.chan.on('user:joined', function(msg) {
     this.users = msg.users;
     dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
   }.bind(this));
 
-  this.chan.on('nick:changed', function(msg) {
+  this.chan.on('user:left', function(msg) {
+    this.users = msg.users;
+    dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
+  }.bind(this));
+
+  this.chan.on('nick:change', function(msg) {
     this.users = msg.users;
     dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
   }.bind(this));

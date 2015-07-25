@@ -8,8 +8,7 @@ defmodule Quack.RoomChannel do
       unless Quack.Repo.get_by(Quack.Room, name: room_name) do
         Quack.Repo.insert! %Quack.Room{name: room_name}
       end
-      Quack.RoomUsers.add_room(room_name)
-      Quack.RoomUsers.add_user(room_name, payload.user.name)
+      Quack.RoomActivityService.register(room: room_name, user: payload.user.name, pid: socket.channel_pid)
       send(self, "user:joined")
       {:ok, Quack.RoomUsers.get_room(room_name), socket}
     else
@@ -17,24 +16,24 @@ defmodule Quack.RoomChannel do
     end
   end
 
-  def handle_info("user:joined", socket) do
+  def handle_info("user:joined" = event, socket) do
     "rooms:" <> room_name = socket.topic
-    broadcast! socket, "join:notification", %{users: Quack.RoomUsers.get_room(room_name)}
+    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 
-  def handle_in("new:msg", payload, socket) do
+  def handle_in("new:msg" = event, payload, socket) do
     Quack.Repo.insert! %Quack.Message{body: payload["text"]}
-    broadcast! socket, "new:msg", payload
+    broadcast! socket, event, payload
     {:noreply, socket}
   end
 
-  def handle_in("nick:change", payload, socket) do
+  def handle_in("nick:change" = event, payload, socket) do
     payload = atomize_keys(payload)
     "rooms:" <> room_name = socket.topic
-    Quack.RoomUsers.remove_user(room_name, payload.oldName)
-    Quack.RoomUsers.add_user(room_name, payload.newName)
-    broadcast! socket, "nick:changed", %{users: Quack.RoomUsers.get_room(room_name)}
+    Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    Quack.RoomActivityService.register(room: room_name, user: payload.newName, pid: socket.channel_pid)
+    broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name)}
     {:noreply, socket}
   end
 
@@ -44,6 +43,12 @@ defmodule Quack.RoomChannel do
   def handle_out(event, payload, socket) do
     push socket, event, payload
     {:noreply, socket}
+  end
+
+  def terminate(error, socket) do
+    "rooms:" <> room_name = socket.topic
+    Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    broadcast! socket, "user:left", %{users: Quack.RoomUsers.get_room(room_name), leaving_user: "user"}
   end
 
   # Add authorization logic here as required.

@@ -28,6 +28,10 @@ var Input = React.createClass({
     SettingsStore.on('change', this.settingsStoreChange);
   },
 
+  componentWillUnmount: function() {
+    SettingsStore.removeListener('change', this.settingsStoreChange);
+  },
+
   _onChange: function(event) {
     this.setState({
       message: event.target.value,

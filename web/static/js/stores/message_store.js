@@ -25,9 +25,15 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   },
 
   forRoom: function(roomName) {
-    return this.all().filter(function(message) {
+    var messages = this.all().filter(function(message) {
       return message.roomName == roomName;
     });
+
+    var sorted = messages.sort(function(message1, message2) {
+      return message1.timestamp - message2.timestamp;
+    });
+
+    return sorted;
   },
 
   pending: function() {
