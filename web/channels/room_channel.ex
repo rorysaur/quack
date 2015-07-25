@@ -23,13 +23,13 @@ defmodule Quack.RoomChannel do
     {:noreply, socket}
   end
 
-  def handle_in("new:msg" = event, payload, socket) do
+  def handle_in("msg:new" = event, payload, socket) do
     Quack.Repo.insert! %Quack.Message{body: payload["text"]}
     broadcast! socket, event, payload
     {:noreply, socket}
   end
 
-  def handle_in("nick:change" = event, payload, socket) do
+  def handle_in("user:nickchange" = event, payload, socket) do
     payload = atomize_keys(payload)
     "rooms:" <> room_name = socket.topic
     Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
@@ -50,7 +50,7 @@ defmodule Quack.RoomChannel do
     "rooms:" <> room_name = socket.topic
     {:ok, user} = Quack.RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
     broadcast! socket, "user:left", %{users: Quack.RoomUsers.get_room(room_name), leaving_user: user}
-    broadcast! socket, "new:msg", Quack.OperatorMessage.new("#{user} has left")
+    broadcast! socket, "msg:new", Quack.OperatorMessage.new("#{user} has left")
   end
 
   # Add authorization logic here as required.
