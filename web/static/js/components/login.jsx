@@ -39,7 +39,6 @@ var About = React.createClass({
     Actions.renameLocalUser(this.state.nick);
     this.transitionTo('chat');
   }
-
 });
 
 module.exports = About;
