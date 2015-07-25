@@ -4,6 +4,7 @@ var ActiveRoom = require('./active_room.jsx');
 var RoomList = require('./room_list.jsx');
 var Navigation = require('react-router').Navigation;
 var UserStore = require('../stores/user_store');
+var Actions = require('../actions/actions');
 
 var Chat = React.createClass({
   mixins: [Navigation],
@@ -33,6 +34,8 @@ var Chat = React.createClass({
   componentWillMount: function() {
     if (UserStore.localUser().name === null) {
       this.transitionTo('login');
+    } else {
+      Actions.subscribe(this.state.activeRoom);
     }
   }
 });

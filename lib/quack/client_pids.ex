@@ -1,4 +1,7 @@
 defmodule Quack.ClientPids do
+  @moduledoc """
+  Agent that stores a hash of channel pids and the nick belonging to that channel id. We can store more about the user in the future.
+  """
   @name __MODULE__
   def start_link do
     Agent.start_link(fn -> HashDict.new end, name: @name)
@@ -16,6 +19,9 @@ defmodule Quack.ClientPids do
     Agent.update(@name, &HashDict.delete(&1, pid))
   end
 
+  @doc """
+  Fetches user for pid. Returns the user while droping it from storage.
+  """
   def pop_user(pid) do
     {:ok, user} = get_user(pid)
     drop_user(pid)
