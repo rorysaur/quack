@@ -22,8 +22,9 @@ defmodule Quack.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Quack do
-  #   pipe_through :api
-  # end
+  scope "/api", Quack do
+    pipe_through :api
+
+    post "/register", RegistrationController, :create
+  end
 end
