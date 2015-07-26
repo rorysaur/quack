@@ -3,7 +3,7 @@ var Actions = require('../actions/actions');
 var Navigation = require('react-router').Navigation;
 var KeyCodes = require('../utils/keycodes');
 
-var About = React.createClass({
+var Login = React.createClass({
   mixins: [Navigation],
   render: function () {
     return (
@@ -42,4 +42,4 @@ var About = React.createClass({
 
 });
 
-module.exports = About;
+module.exports = Login;
