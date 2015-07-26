@@ -19,7 +19,7 @@ defmodule Quack.RoomChannel do
   def handle_info(%{event: "user:joined" = event, new_user: user}, socket) do
     "rooms:" <> room_name = socket.topic
     broadcast! socket, event, %{users: Quack.RoomUsers.get_room(room_name), new_user: user}
-    broadcast! socket, "new:msg", Quack.OperatorMessage.new("#{user} has joined")
+    broadcast! socket, "msg:new", Quack.OperatorMessage.new("#{user} has joined")
     {:noreply, socket}
   end
 

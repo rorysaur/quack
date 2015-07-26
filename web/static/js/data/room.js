@@ -12,7 +12,7 @@ var dispatch = function(type, data) {
 var DispatchHandler = {};
 DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, room) {
   if (message.roomName == room.name) {
-    room.chan.push('new:msg', message);
+    room.chan.push('msg:new', message);
   }
 };
 
