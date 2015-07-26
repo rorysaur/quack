@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
+var QuackAPI = require('../data/api');
 var QuackSocket = require('../data/socket');
 var UserStore = require('../stores/user_store');
 var UserCommandHandler = require('../utils/user_command_handler');
@@ -48,6 +49,19 @@ module.exports = {
         value: change.value
       }
     );
+  },
+
+  registerUser: function(userParams) {
+    QuackAPI.post({
+      user: userParams
+    });
+    // dispatch(
+    //   ActionTypes.REGISTER_USER,
+    //   {
+    //     email: userParams.email,
+    //     password: userParams.password
+    //   }
+    // );
   },
 
   subscribe: function(roomName) {
