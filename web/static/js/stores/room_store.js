@@ -17,9 +17,9 @@ var _rooms = {
 
 var RoomStore = assign({}, EventEmitter.prototype, {
   byName: function(name) {
-    if (subscribed[name] !== null) {
+    if (_rooms.subscribed[name] !== undefined) {
       return _rooms.subscribed[name];
-    } else if (unsubscribed[name] !== null) {
+    } else if (_rooms.unsubscribed[name] !== undefined) {
       return _rooms.unsubscribed[name];
     }
   },
@@ -59,7 +59,7 @@ var RoomStore = assign({}, EventEmitter.prototype, {
       _rooms.unsubscribed[roomName] = room;
       delete _rooms.subscribed[roomName];
 
-      if (roomName === this._activeRoom) {
+      if (roomName === this._activeRoom && this.subscribed().length > 0) {
         this._activeRoom = this.subscribed()[0];
         this.emit('change');
       }
