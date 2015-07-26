@@ -35,4 +35,8 @@ defmodule Quack.RoomUsers do
       Dict.update!(rooms, roomname, &HashSet.delete(&1, user))
     end)
   end
+
+  def flush do
+    Agent.update(@name, fn(state) -> HashDict.new end)
+  end
 end

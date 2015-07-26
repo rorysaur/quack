@@ -12,7 +12,6 @@ config :logger, level: :warn
 # Configure your database
 config :quack, Quack.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "quackuser",
   database: "quack_test",
   size: 1 # Use a single connection for transactional tests

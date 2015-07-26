@@ -28,16 +28,17 @@ defmodule Quack.RoomChannel do
   def handle_in("msg:new" = event, payload, socket) do
     Repo.insert! %Message{body: payload["text"]}
     broadcast! socket, event, payload
-    {:noreply, socket}
+    {:reply, :ok, socket}
   end
 
   def handle_in("user:nickchange" = event, payload, socket) do
     payload = atomize_keys(payload)
     "rooms:" <> room_name = socket.topic
-    RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
+    {:ok, old_name} = RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
     RoomActivityService.register(room: room_name, user: payload.newName, pid: socket.channel_pid)
+    broadcast! socket, "msg:new", OperatorMessage.new("#{old_name} is now known as #{payload.newName}")
     broadcast! socket, event, %{users: RoomUsers.get_room(room_name)}
-    {:noreply, socket}
+    {:reply, :ok, socket}
   end
 
   # This is invoked every time a notification is being broadcast

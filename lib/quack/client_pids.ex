@@ -27,4 +27,8 @@ defmodule Quack.ClientPids do
     drop_user(pid)
     {:ok, user}
   end
+
+  def flush do
+    Agent.update(@name, fn(state) -> HashDict.new end)
+  end
 end
