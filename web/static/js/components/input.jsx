@@ -26,6 +26,7 @@ var Input = React.createClass({
 
   componentDidMount: function() {
     SettingsStore.on('change', this.settingsStoreChange);
+    React.findDOMNode(this).focus();
   },
 
   componentWillUnmount: function() {
