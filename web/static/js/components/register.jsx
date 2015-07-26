@@ -32,13 +32,13 @@ var Register = React.createClass({
 
   _onClick: function(e) {
     e.preventDefault();
-    this._setNick();
+    this._registerUser();
   },
 
   _onKeyDown: function(event) {
     if (event.keyCode === KeyCodes.enter) {
       event.preventDefault();
-      this._register();
+      this._registerUser();
     }
   },
 
