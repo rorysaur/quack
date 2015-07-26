@@ -24,6 +24,12 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     }
   },
 
+  _activeRoom: "bestcohort",
+
+  activeRoom: function() {
+    return this._activeRoom
+  },
+
   subscribed: function() {
     return Object.keys(_rooms.subscribed);
   },
@@ -38,6 +44,12 @@ var RoomStore = assign({}, EventEmitter.prototype, {
     }
     delete _rooms.unsubscribed[roomName];
     _rooms.subscribed[roomName] = QuackSocket.createRoom(roomName);
+
+    if (roomName !== this._activeRoom) {
+      this._activeRoom = roomName;
+      this.emit('change');
+    }
+
   },
 
   unsubscribe: function(roomName) {
@@ -46,6 +58,11 @@ var RoomStore = assign({}, EventEmitter.prototype, {
       room.leave();
       _rooms.unsubscribed[roomName] = room;
       delete _rooms.subscribed[roomName];
+
+      if (roomName === this._activeRoom) {
+        this._activeRoom = this.subscribed()[0];
+        this.emit('change');
+      }
     }
   }
 });
@@ -58,12 +75,19 @@ DispatchHandler[ActionTypes.SUBSCRIBE] = function(data) {
 
 DispatchHandler[ActionTypes.UNSUBSCRIBE] = function(data) {
   RoomStore.unsubscribe(data);
+  RoomStore
   RoomStore.emit('change');
 };
 
 DispatchHandler[ActionTypes.USER_LIST_CHANGE] = function(data) {
-  RoomStore.emit('change' + data.roomName);
+  RoomStore.emit('change');
 };
+
+DispatchHandler[ActionTypes.CHANGE_ACTIVE_ROOM] = function(data) {
+  RoomStore._activeRoom = data.room
+  RoomStore.emit('change');
+};
+
 
 RoomStore.dispatchToken = AppDispatcher.register(function(action) {
   if (DispatchHandler.hasOwnProperty(action.type)) {

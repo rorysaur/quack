@@ -5,6 +5,7 @@ var RoomList = require('./room_list.jsx');
 var Navigation = require('react-router').Navigation;
 var UserStore = require('../stores/user_store');
 var Actions = require('../actions/actions');
+var RoomStore = require('../stores/room_store');
 
 var Chat = React.createClass({
   mixins: [Navigation],
@@ -22,12 +23,12 @@ var Chat = React.createClass({
   },
 
   activeRoomChangeHandler: function(room) {
-    this.setState({activeRoom: room});
+    Actions.changeActiveRoom(room);
   },
 
   getInitialState: function() {
     return {
-      activeRoom: 'bestcohort'
+      activeRoom: RoomStore.activeRoom()
     };
   },
 
@@ -37,6 +38,20 @@ var Chat = React.createClass({
     } else {
       Actions.subscribe(this.state.activeRoom);
     }
+  },
+
+  componentDidMount: function() {
+    RoomStore.on('change', this._roomStoreChange);
+  },
+
+  componentWillUnmount: function() {
+    RoomStore.removeListener('change', this._roomStoreChange);
+  },
+
+  _roomStoreChange: function() {
+    this.setState({
+      activeRoom: RoomStore.activeRoom()
+    });
   }
 });
 

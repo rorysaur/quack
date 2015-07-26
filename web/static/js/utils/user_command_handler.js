@@ -1,3 +1,5 @@
+var RoomStore = require('../stores/room_store');
+
 var Parser = {
   delimiters: [" ", "/"],
 
@@ -47,11 +49,22 @@ module.exports = {
       },
 
       join: function() {
-        actions.subscribe(args[0]);
+        if (args[0] === undefined) {
+          actions.flashNotify('Must pass room name to /join, i.e. `/join bestcohort`');
+        } else {
+          actions.subscribe(args[0]);
+        }
       },
 
       leave: function() {
-        actions.unsubscribe(args[0]);
+        var room;
+        if (args[0] !== undefined) {
+          room = args[0];
+        } else {
+          room = RoomStore.activeRoom();
+        }
+
+        actions.unsubscribe(room);
       }
     };
 

@@ -21,19 +21,7 @@ var RoomUsers = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.setState({users: RoomStore.byName(this.props.roomName).users});
-  },
-
-  componentDidMount: function() {
-    RoomStore.on('change' + this.props.roomName, this._roomStoreChange);
-  },
-
-  componentWillUnmount: function () {
-    RoomStore.removeListener('change' + this.props.roomName, this._roomStoreChange);
-  },
-
-  _roomStoreChange: function() {
-    this.setState({users: RoomStore.byName(this.props.roomName).users});
+    this.setState({users: RoomStore.byName(nextProps.roomName).users});
   }
 });
 module.exports = RoomUsers;

@@ -79,5 +79,14 @@ module.exports = {
       ActionTypes.NOTIFY,
       { message: message }
     );
+  },
+
+  changeActiveRoom: function(room) {
+    dispatch(
+      ActionTypes.CHANGE_ACTIVE_ROOM,
+      {
+        room: room
+      }
+    )
   }
 };
