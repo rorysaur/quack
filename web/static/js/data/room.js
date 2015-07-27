@@ -20,6 +20,10 @@ DispatchHandler[ActionTypes.RENAME_LOCAL_USER] = function(data, room) {
   room.chan.push('user:nickchange', data);
 };
 
+DispatchHandler[ActionTypes.CHAT_ACTION] = function(data, room) {
+  room.chan.push('user:action', data);
+};
+
 var Room  = function(phoenixChan) {
   this.chan = phoenixChan;
   this.chan.params.user = UserStore.localUser();

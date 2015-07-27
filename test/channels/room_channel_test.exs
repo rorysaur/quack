@@ -1,7 +1,7 @@
 defmodule Quack.RoomChannelTest do
   use Quack.ChannelCase
   require AliasMany
-  AliasMany.alias [RoomChannel, Room, RoomActivityService, OperatorMessage, RoomUsers, Message], from: Quack
+  AliasMany.alias [RoomChannel, Room, RoomActivityService, OperatorMessage, RoomUsers, Message, ClientPids], from: Quack
 
   setup do
     {:ok, _, socket} = subscribe_and_join(RoomChannel, "rooms:lobby", %{"user" => %{"name" => "guest"}})
@@ -73,6 +73,14 @@ defmodule Quack.RoomChannelTest do
     Process.unlink(socket.channel_pid)
     :ok = close(socket)
     announcement = "guest has left"
+    assert OperatorMessage.new(announcement)
+    assert_broadcast "msg:new", %{text: ^announcement}
+  end
+
+  test "the channel broadcasts user 'actions' ", %{socket: socket} do
+    ref = push socket, "user:action", %{"actionText" => "is hungry"}
+    assert_reply ref, :ok
+    announcement = "guest is hungry"
     assert OperatorMessage.new(announcement)
     assert_broadcast "msg:new", %{text: ^announcement}
   end

@@ -14,6 +14,7 @@ module.exports = {
     SUBSCRIBE: null,
     UNSUBSCRIBE: null,
     USER_LIST_CHANGE: null,
-    CHANGE_ACTIVE_ROOM: null
+    CHANGE_ACTIVE_ROOM: null,
+    CHAT_ACTION: null
   })
 };

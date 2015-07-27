@@ -2,7 +2,7 @@ defmodule Quack.RoomChannel do
   use Phoenix.Channel
   require Logger
   require AliasMany
-  AliasMany.alias [Repo, Room, RoomUsers, Message, RoomActivityService, OperatorMessage], from: Quack
+  AliasMany.alias [Repo, Room, RoomUsers, Message, RoomActivityService, OperatorMessage, ClientPids], from: Quack
 
   def join("rooms:" <> room_name, payload, socket) do
     payload = atomize_keys(payload)
@@ -38,6 +38,13 @@ defmodule Quack.RoomChannel do
     RoomActivityService.register(room: room_name, user: payload.newName, pid: socket.channel_pid)
     broadcast! socket, "msg:new", OperatorMessage.new("#{old_name} is now known as #{payload.newName}")
     broadcast! socket, event, %{users: RoomUsers.get_room(room_name)}
+    {:reply, :ok, socket}
+  end
+
+  def handle_in("user:action" = event, payload, socket) do
+    payload = atomize_keys(payload)
+    {:ok, username} = ClientPids.get_user(socket.channel_pid)
+    broadcast! socket, "msg:new", OperatorMessage.new("#{username} #{payload.actionText}")
     {:reply, :ok, socket}
   end
 
