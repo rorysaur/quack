@@ -33,6 +33,8 @@ defmodule Quack.Web do
 
       # Import URL helpers from the router
       import Quack.Router.Helpers
+
+      alias Quack.User
     end
   end
 
