@@ -48,14 +48,6 @@ defmodule Quack.RoomChannel do
     {:reply, :ok, socket}
   end
 
-  # This is invoked every time a notification is being broadcast
-  # to the client. The default implementation is just to push it
-  # downstream but one could filter or change the event.
-  def handle_out(event, payload, socket) do
-    push socket, event, payload
-    {:noreply, socket}
-  end
-
   def terminate(error, socket) do
     "rooms:" <> room_name = socket.topic
     {:ok, user} = RoomActivityService.unregister(room: room_name, pid: socket.channel_pid)
