@@ -1,5 +1,10 @@
 defmodule Quack.RoomUsers do
   @name __MODULE__
+  @moduledoc """
+  Agent for tracking the which users are currently connected to which rooms.
+  State consists of a HashDict where the keys are room names and the values are
+  HashSets of user_names.
+  """
   def start_link do
     Agent.start_link(fn -> HashDict.new end, name: @name)
   end
@@ -29,5 +34,9 @@ defmodule Quack.RoomUsers do
     Agent.update(@name, fn(rooms) ->
       Dict.update!(rooms, roomname, &HashSet.delete(&1, user))
     end)
+  end
+
+  def flush do
+    Agent.update(@name, fn(state) -> HashDict.new end)
   end
 end

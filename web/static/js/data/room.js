@@ -12,12 +12,12 @@ var dispatch = function(type, data) {
 var DispatchHandler = {};
 DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message, room) {
   if (message.roomName == room.name) {
-    room.chan.push('new:msg', message);
+    room.chan.push('msg:new', message);
   }
 };
 
 DispatchHandler[ActionTypes.RENAME_LOCAL_USER] = function(data, room) {
-  room.chan.push('nick:change', data);
+  room.chan.push('user:nickchange', data);
 };
 
 var Room  = function(phoenixChan) {
@@ -47,7 +47,7 @@ var Room  = function(phoenixChan) {
     console.log('channel closed', e);
   });
 
-  this.chan.on('new:msg', function(msg) {
+  this.chan.on('msg:new', function(msg) {
     msg.roomName = this.name;
     dispatch(ActionTypes.INCOMING_MESSAGE, msg);
   }.bind(this));
@@ -62,7 +62,7 @@ var Room  = function(phoenixChan) {
     dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
   }.bind(this));
 
-  this.chan.on('nick:change', function(msg) {
+  this.chan.on('user:nickchange', function(msg) {
     this.users = msg.users;
     dispatch(ActionTypes.USER_LIST_CHANGE, {roomName: this.name});
   }.bind(this));

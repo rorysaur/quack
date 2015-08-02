@@ -34,6 +34,7 @@ defmodule Quack.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 1.1"},
      {:phoenix_live_reload, "~> 0.4.3", only: :dev},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:alias_many, github: "jacknoble/alias_many"}]
   end
 end

@@ -16,7 +16,11 @@ var Flash = React.createClass({
   },
 
   componentDidMount: function() {
-    FlashStore.on('change', this.setFlashMessage);
+    FlashStore.on('change', this._setFlashMessage);
+  },
+
+  componentWillUnmount: function() {
+    FlashStore.removeListener('change', this._setFlashMessage)
   },
 
   componentDidUpdate: function() {
@@ -25,7 +29,7 @@ var Flash = React.createClass({
     }, 5000);
   },
 
-  setFlashMessage: function() {
+  _setFlashMessage: function() {
     this.setState({message: FlashStore.message()});
   }
 });

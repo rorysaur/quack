@@ -32,7 +32,6 @@ var MessageStore = assign({}, EventEmitter.prototype, {
     var sorted = messages.sort(function(message1, message2) {
       return message1.timestamp - message2.timestamp;
     });
-
     return sorted;
   },
 
@@ -61,6 +60,7 @@ DispatchHandler[ActionTypes.CREATE_MESSAGE] = function(message) {
 
 DispatchHandler[ActionTypes.INCOMING_MESSAGE] = function(message) {
   delete _pendingMessages[message.clientId];
+  message.timestamp = parseInt(message.timestamp);
   message.status = "Success";
   _savedMessages.push(message);
 };

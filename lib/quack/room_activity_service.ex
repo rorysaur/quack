@@ -10,4 +10,9 @@ defmodule Quack.RoomActivityService do
     Quack.RoomUsers.remove_user(room, user)
     {:ok, user}
   end
+
+  def flush_all do
+    Quack.RoomUsers.flush
+    Quack.ClientPids.flush
+  end
 end
