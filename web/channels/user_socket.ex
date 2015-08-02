@@ -2,7 +2,7 @@ defmodule Quack.UserSocket do
   use Phoenix.Socket
   
   ## Channels
-  channel "rooms:*", RoomChannel
+  channel "rooms:*", Quack.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
