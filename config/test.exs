@@ -14,4 +14,5 @@ config :quack, Quack.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "quackuser",
   database: "quack_test",
-  size: 1 # Use a single connection for transactional tests
+  size: 1, # Use a single connection for transactional tests
+  pool: Ecto.Adapters.SQL.Sandbox

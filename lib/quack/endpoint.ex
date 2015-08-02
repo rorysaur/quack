@@ -1,6 +1,8 @@
 defmodule Quack.Endpoint do
   use Phoenix.Endpoint, otp_app: :quack
 
+  socket "/ws", Quack.UserSocket
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
@@ -12,6 +14,7 @@ defmodule Quack.Endpoint do
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
@@ -31,5 +34,5 @@ defmodule Quack.Endpoint do
     key: "_quack_key",
     signing_salt: "uop7kEZB"
 
-  plug :router, Quack.Router
+  plug Quack.Router
 end
