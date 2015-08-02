@@ -87,6 +87,15 @@ module.exports = {
       {
         room: room
       }
-    )
+    );
+  },
+
+  chatAction: function(actionText) {
+    dispatch(
+      ActionTypes.CHAT_ACTION,
+      {
+        actionText: actionText
+      }
+    );
   }
 };

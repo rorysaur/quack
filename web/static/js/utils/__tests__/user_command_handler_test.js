@@ -25,4 +25,9 @@ describe('UserCommandHandler', function() {
     UserCommandHandler.handle('/s/delimeter/delimiter', Actions);
     expect(Actions.editLastMessage.mock.calls[0][0]).toEqual({find: 'delimeter', replaceWith: 'delimiter'});
   });
+
+  it('triggest the chatAction action with me', function() {
+    UserCommandHandler.handle('/me is hungry', Actions);
+    expect(Actions.chatAction.mock.calls[0][0]).toEqual('is hungry');
+  });
 });

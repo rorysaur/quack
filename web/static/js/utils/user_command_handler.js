@@ -65,6 +65,10 @@ module.exports = {
         }
 
         actions.unsubscribe(room);
+      },
+
+      me: function() {
+        actions.chatAction(args.join(" "));
       }
     };
 
