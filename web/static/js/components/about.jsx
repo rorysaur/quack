@@ -5,7 +5,7 @@ var About = React.createClass({
     return (
       <article className="about">
         <p>
-          A humble but ambitious clone of Slack, the chat app, using React, Flux, and Firebase.
+          A humble but ambitious clone of Slack, the chat app, using React, Flux, and Phoenix Framework.
         </p>
       </article>
     );
