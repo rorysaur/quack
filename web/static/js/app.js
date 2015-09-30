@@ -1,12 +1,10 @@
-var React = require('react');
-require('../stylesheets/app.scss');
-var Router = require('react-router');
-var routes = require('./routes/routes');
+import React from 'react'
+import '../stylesheets/app.scss'
+import Router from 'react-router'
+import routes from './routes/routes'
 
 // bootstrap entire application and render into DOM
-Router.run(routes, function (Handler) {
-  React.render(
-    <Handler/>, 
-    document.getElementById('react')
-  );
-});
+React.render(
+	<Router routes={routes}/>, 
+	document.getElementById('react')
+)

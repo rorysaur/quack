@@ -2,12 +2,25 @@
 
 A humble but ambitious clone of Slack, the chat app, using React, Flux, Elixir and Phoenix.
 
-## Installation
+## Installation (MacOSX)
+
+`brew install elixir`
+
+`brew install postgresql`
+
+ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+postgres -D /usr/local/var/postgres
+
+createuser quackuser -d
 
 `git clone https://github.com/rorysaur/quack.git`
 
-`mix deps.get, compile`
-Create a postgresql user named `quackuser` with db creation permissions. The run:
+`mix deps.get`
+
+`mix deps.compile`
 
 `mix ecto.create`
 
