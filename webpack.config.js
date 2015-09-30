@@ -18,7 +18,6 @@ module.exports = {
         query: {
           stage: 0
         }
-        //loader: 'jsx-loader?insertPragma=React.DOM&harmony'
       },
       {
         test: /\.scss$/,
