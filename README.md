@@ -8,13 +8,13 @@ A humble but ambitious clone of Slack, the chat app, using React, Flux, Elixir a
 
 `brew install postgresql`
 
-ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+`ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents`
 
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+`launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist`
 
-postgres -D /usr/local/var/postgres
+`postgres -D /usr/local/var/postgres`
 
-createuser quackuser -d
+`createuser quackuser -d`
 
 `git clone https://github.com/rorysaur/quack.git`
 
