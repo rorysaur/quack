@@ -4,7 +4,8 @@ defmodule Quack.RoomChannelTest do
   AliasMany.alias [RoomChannel, Room, RoomActivityService, OperatorMessage, RoomUsers, Message, ClientPids], from: Quack
 
   setup do
-    {:ok, _, socket} = subscribe_and_join(RoomChannel, "rooms:lobby", %{"user" => %{"name" => "guest"}})
+    {:ok, _, socket} =
+     socket() |> subscribe_and_join(RoomChannel, "rooms:lobby", %{"user" => %{"name" => "guest"}})
     on_exit fn ->
       RoomActivityService.flush_all
     end
