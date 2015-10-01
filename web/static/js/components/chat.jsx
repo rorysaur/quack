@@ -2,13 +2,13 @@ var React = require('react');
 var Flash = require('./flash.jsx');
 var ActiveRoom = require('./active_room.jsx');
 var RoomList = require('./room_list.jsx');
-var Navigation = require('react-router').Navigation;
+var History = require('react-router').History;
 var UserStore = require('../stores/user_store');
 var Actions = require('../actions/actions');
 var RoomStore = require('../stores/room_store');
 
 var Chat = React.createClass({
-  mixins: [Navigation],
+  mixins: [History],
 
   render: function() {
     return (
@@ -34,7 +34,7 @@ var Chat = React.createClass({
 
   componentWillMount: function() {
     if (UserStore.localUser().name === null) {
-      this.transitionTo('login');
+      this.history.pushState(null, '/login');
     } else {
       Actions.subscribe(this.state.activeRoom);
     }

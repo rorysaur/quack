@@ -1,10 +1,10 @@
 var React = require('react');
 var Actions = require('../actions/actions');
-var Navigation = require('react-router').Navigation;
+var History = require('react-router').History;
 var KeyCodes = require('../utils/keycodes');
 
 var About = React.createClass({
-  mixins: [Navigation],
+  mixins: [History],
   render: function () {
     return (
       <article className="login">
@@ -37,7 +37,7 @@ var About = React.createClass({
 
   setNick: function() {
     Actions.renameLocalUser(this.state.nick);
-    this.transitionTo('chat');
+    this.history.pushState(null, '/chat');
   }
 });
 

@@ -8,11 +8,16 @@ module.exports = {
     path: './priv/static/js',
     filename: 'bundle.js'
   },
+  devtool: 'inline-source-map',
   module: {
     loaders: [
       {
         test: /\.jsx$|app.js$|routes\/routes.js$/,
-        loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          stage: 0
+        }
       },
       {
         test: /\.scss$/,

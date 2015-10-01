@@ -4,7 +4,7 @@ var UserStore = require('../stores/user_store');
 
 var RoomUsers = React.createClass({
   render: function() {
-    names = this.state.users.map(function(user, index) {
+    var names = this.state.users.map(function(user, index) {
       return(
         <li key={index}>{user}</li>
       );

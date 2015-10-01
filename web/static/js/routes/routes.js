@@ -1,18 +1,17 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var About = require('../components/about.jsx');
-var Quack = require('../components/quack.jsx');
-var Chat = require('../components/chat.jsx');
-var Login = require('../components/login.jsx');
+import React from 'react'
+import Router, {Route, IndexRoute} from 'react-router'
+import About from '../components/about.jsx'
+import Quack from '../components/quack.jsx'
+import Chat from '../components/chat.jsx'
+import Login from '../components/login.jsx'
 
-var routes = (
-  <Route path='/' handler={Quack}>
-    <DefaultRoute name="login" handler={Login} />
-    <Route name="chat" handler={Chat} />
-    <Route name="about" handler={About}/>
+const routes = (
+  <Route path='/' component={Quack}>
+    <IndexRoute component={Login} />
+    <Route path="/login" component={Login} />
+    <Route path="/chat" component={Chat} />
+    <Route path="/about" component={About}/>
   </Route>
-);
+)
 
-module.exports = routes;
+export default routes

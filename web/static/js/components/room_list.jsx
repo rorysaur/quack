@@ -3,8 +3,8 @@ var RoomStore = require('../stores/room_store');
 
 var RoomList = React.createClass({
   render: function() {
-    subscribed = this.state.subscribed.map(this._generateChannelLI);
-    unsubscribed = this.state.unsubscribed.map(this._generateChannelLI);
+    var subscribed = this.state.subscribed.map(this._generateChannelLI);
+    var unsubscribed = this.state.unsubscribed.map(this._generateChannelLI);
     return(
       <div className="room-list">
         <h4>Channels</h4>
@@ -42,7 +42,7 @@ var RoomList = React.createClass({
 
   _onClick: function(event) {
     event.preventDefault();
-    roomName = event.target.textContent;
+    var roomName = event.target.textContent;
     this.props.activeRoomChangeCallback(roomName);
   },
 

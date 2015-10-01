@@ -20,21 +20,22 @@
   },
   "homepage": "https://github.com/rorysaur/quack",
   "devDependencies": {
-    "css-loader": "^0.15.1",
-    "jest-cli": "^0.4.13",
-    "jsx-loader": "^0.13.2",
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.19.0",
+    "jest-cli": "^0.5.8",
     "node-bourbon": "^4.2.3",
     "node-libs-browser": "^0.5.2",
     "node-neat": "^1.7.2",
     "node-sass": "^3.2.0",
-    "sass-loader": "^1.0.2",
+    "sass-loader": "^3.0.0",
     "style-loader": "^0.12.3",
     "webpack": "^1.9.12"
   },
   "dependencies": {
     "flux": "^2.0.3",
-    "object-assign": "^3.0.0",
+    "object-assign": "^4.0.1",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^1.0.0-rc1"
   }
 }
